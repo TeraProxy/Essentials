@@ -38,7 +38,7 @@ module.exports = function Essentials(dispatch) {
 	if(HIDE_MESSAGE)
 		dispatch.hook('S_SYSTEM_MESSAGE', 1, event => {
 			let msg = event.message.split('\x0b'),
-				type = msg[0].startsWith('@') ? sysmsg.map.code[msg[0].slice(1)] : ''
+				type = msg[0].startsWith('@') ? sysmsg.maps.get(dispatch.base.protocolVersion).code.get(msg[0].slice(1)) : ''
 
 			if(type == 'SMT_ITEM_USED' || type == 'SMT_CANT_USE_ITEM_COOLTIME') {
 				let obj = {}
@@ -192,13 +192,14 @@ module.exports = function Essentials(dispatch) {
 		if(event.target.toUpperCase() === "!essentials".toUpperCase()) {
 			if (/^<FONT>on?<\/FONT>$/i.test(event.message)) {
 				enabled = true
-				message('Essentials <font color="#00EE00">enabled</font>.')
+				message('Essentials <font color="#56B4E9">enabled</font>.')
 			}
 			else if (/^<FONT>off?<\/FONT>$/i.test(event.message)) {
 				enabled = false
-				message('Essentials <font color="#DC143C">disabled</font>.')
+				message('Essentials <font color="#E69F00">disabled</font>.')
 			}
-			else message('Commands: "on" (enable Essentials),'
+			else message('Commands:<br>'
+								+ ' "on" (enable Essentials),<br>'
 								+ ' "off" (disable Essentials)'
 						)
 			return false
@@ -216,4 +217,20 @@ module.exports = function Essentials(dispatch) {
 			message: msg
 		})
 	}
+	
+	dispatch.hook('C_CHAT', 1, event => {
+		if(/^<FONT>!essentials<\/FONT>$/i.test(event.message)) {
+			if(!enabled) {
+				enabled = true
+				message('Essentials <font color="#56B4E9">enabled</font>.')
+				console.log('Essentials enabled.')
+			}
+			else {
+				enabled = false
+				message('Essentials <font color="#E69F00">disabled</font>.')
+				console.log('Essentials disabled.')
+			}
+			return false
+		}
+	})
 }
