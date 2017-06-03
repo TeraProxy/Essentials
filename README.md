@@ -17,3 +17,6 @@ Alternative commands in all other chats:
 ## Safety
 Whatever you send to "!Essentials" ingame is intercepted client-side. The chat is NOT sent to the server.  
 The script makes sure that you are not dead, mounted, in a battleground or in a negotiation before using an item.  
+  
+## Credits  
+Contains code from elin-magic by Pinkie Pie https://github.com/pinkipi  

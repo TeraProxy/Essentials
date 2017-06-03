@@ -1,4 +1,4 @@
-// based on true-everful-nostrum by https://github.com/pinkipi
+// Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 const HIDE_DURATION = false,
 	HIDE_MESSAGE = false
