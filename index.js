@@ -6,7 +6,8 @@ const HIDE_DURATION = false,
 const ITEMS_NOSTRUM = [184659], // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_TD = 4030,
 	BUFF_NOSTRUM_H = 4031,
-	BUFF_CCB = 4610
+	BUFF_CCB = 4610,
+	BUFF_GODDESS = 1134
 
 const sysmsg = require('tera-data-parser').sysmsg
 
@@ -95,7 +96,20 @@ module.exports = function Essentials(dispatch) {
 	dispatch.hook('S_REJECT_CONTRACT', 1, contract.bind(null, false))
 	dispatch.hook('S_CANCEL_CONTRACT', 1, contract.bind(null, false))
 
+	dispatch.hook('C_USE_ITEM', (event) => {
+		if(event.item == 200529 || event.item == 60260 || event.item == 160322)
+			nostrum(true)
+	});
+
 	function abnormality(type, event) {
+		if(type == 'S_ABNORMALITY_BEGIN' && event.id == BUFF_GODDESS){
+			nostrum(true)
+		}
+
+		if(type == 'S_ABNORMALITY_END' && event.id == BUFF_GODDESS){
+			nostrum()
+		}
+
 		if(event.target.equals(cid) && (event.id == BUFF_NOSTRUM_TD || event.id == BUFF_NOSTRUM_H)) {
 			nextUse = type == 'S_ABNORMALITY_END' ? 0 : Date.now() + Math.floor(event.duration / 2)
 			nostrum()
