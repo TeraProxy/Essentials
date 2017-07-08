@@ -102,11 +102,11 @@ module.exports = function Essentials(dispatch) {
 	});
 
 	function abnormality(type, event) {
-		if(type == 'S_ABNORMALITY_BEGIN' && event.id == BUFF_GODDESS && event.target=cid){
+		if(type == 'S_ABNORMALITY_BEGIN' && event.id == BUFF_GODDESS && event.target.equals(cid)){
 			nostrum(true)
 		}
 
-		if(type == 'S_ABNORMALITY_END' && event.id == BUFF_GODDESS && event.target=cid){
+		if(type == 'S_ABNORMALITY_END' && event.id == BUFF_GODDESS && event.target.equals(cid)){
 			nostrum()
 		}
 
