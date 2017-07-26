@@ -1,14 +1,11 @@
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
-const HIDE_DURATION = false,
-	HIDE_MESSAGE = false
-
-const ITEMS_NOSTRUM = [184659], // EU 152898, NA 184659, RU 201005
+const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_TD = 4030,
 	BUFF_NOSTRUM_H = 4031,
-	BUFF_CCB = 4610
-
-const sysmsg = require('tera-data-parser').sysmsg
+	BUFF_CCB = 4610,
+	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time between 10 and 25 minutes
+	RANDOM_SHORT = [15000, 20000] // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
 
 module.exports = function Essentials(dispatch) {
 	let cid = null,
@@ -29,30 +26,15 @@ module.exports = function Essentials(dispatch) {
 	dispatch.hook('S_LOGIN', 1, event => {
 		({cid} = event)
 		player = event.name
-		nextUse = 0
+		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 		setTimeout(ccb, 20000) // check if you have a CCB 20 seconds after login
 	})
 
 	dispatch.hook('S_RETURN_TO_LOBBY', 1, event => { nostrum(true) })
 
-	if(HIDE_MESSAGE)
-		dispatch.hook('S_SYSTEM_MESSAGE', 1, event => {
-			let msg = event.message.split('\x0b'),
-				type = msg[0].startsWith('@') ? sysmsg.maps.get(dispatch.base.protocolVersion).code.get(msg[0].slice(1)) : ''
-
-			if(type == 'SMT_ITEM_USED' || type == 'SMT_CANT_USE_ITEM_COOLTIME') {
-				let obj = {}
-
-				for(let i = 2; i < msg.length; i += 2) obj[msg[i - 1]] = msg[i]
-
-				for(let item of ITEMS_NOSTRUM)
-					if(obj.ItemName == '@item:' + item) return false
-			}
-		})
-
 	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
-			if(ITEMS_NOSTRUM.includes(item.item)) {
+			if(ITEMS_NOSTRUM == item.item) {
 				slot = item.slot
 
 				if(item.cooldown) cooldown = Date.now() + item.cooldown
@@ -69,17 +51,23 @@ module.exports = function Essentials(dispatch) {
 	dispatch.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, event => { bgZone = event.zone })
 
 	dispatch.hook('S_LOAD_TOPO', 1, event => {
-		nextUse = 0
+		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 		mounted = inContract = false
 		inBG = event.zone == bgZone
 
 		nostrum(true)
 	})
-	dispatch.hook('S_SPAWN_ME', 1, event => { nostrum(!(alive = event.alive)) })
+	
+	dispatch.hook('S_SPAWN_ME', 1, event => { 
+		nostrum(!(alive = event.alive))
+	})
+	
 	dispatch.hook('S_CREATURE_LIFE', 1, event => {
 		if(event.target.equals(cid) && alive != event.alive) {
-			nostrum(!(alive = event.alive))
-
+			setTimeout(function () {
+				nostrum(!(alive = event.alive))
+			}, 1900)
+			
 			if(!alive) {
 				nextUse = 0
 				mounted = inContract = false
@@ -97,15 +85,9 @@ module.exports = function Essentials(dispatch) {
 
 	function abnormality(type, event) {
 		if(event.target.equals(cid) && (event.id == BUFF_NOSTRUM_TD || event.id == BUFF_NOSTRUM_H)) {
-			nextUse = type == 'S_ABNORMALITY_END' ? 0 : Date.now() + Math.floor(event.duration / 2)
-			nostrum()
-
-			if(HIDE_DURATION) {
-				if(type == 'S_ABNORMALITY_BEGIN') {
-					event.duration = 0
-					return true
-				}
-				if(type == 'S_ABNORMALITY_REFRESH') return false
+			if (type == 'S_ABNORMALITY_END') {
+				nextUse = 0
+				nostrum()
 			}
 		}
 		if(event.target.equals(cid) && (event.id == BUFF_CCB)) {
@@ -115,13 +97,6 @@ module.exports = function Essentials(dispatch) {
 			if (type == 'S_ABNORMALITY_END') {
 				hasccb = false
 				ccb()
-			}
-			if(HIDE_DURATION) {
-				if(type == 'S_ABNORMALITY_BEGIN') {
-					event.duration = 0
-					return true
-				}
-				if(type == 'S_ABNORMALITY_REFRESH') return false
 			}
 		}
 	}
@@ -136,8 +111,9 @@ module.exports = function Essentials(dispatch) {
 
 	function nostrum(disable) {
 		clearTimeout(timeout)
-
-		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1) timeout = setTimeout(useNostrum, nextUse - Date.now())
+		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1) {
+			timeout = setTimeout(useNostrum, nextUse - Date.now())
+		}
 	}
 
 	function ccb() {
@@ -154,7 +130,7 @@ module.exports = function Essentials(dispatch) {
 
 		if(time >= cooldown) {
 			dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
-			nextUse = Date.now() + 1000
+			nextUse = Date.now() + randomNumber(RANDOM_MIN_MAX)
 			nostrum()
 		}
 		else timeout = setTimeout(useNostrum, cooldown - time)
@@ -182,6 +158,10 @@ module.exports = function Essentials(dispatch) {
 			unk10: 0,
 			unk11: 1
 		})
+	}
+	
+	function randomNumber([min, max]) {
+		return Math.floor(Math.random() * (max - min + 1) + min)
 	}
 	
 	// ################# //
