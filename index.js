@@ -75,7 +75,7 @@ module.exports = function Essentials(dispatch) {
 	
 	dispatch.hook('C_REVIVE_NOW', 1, (event) => {
 		setTimeout(function () {
-			nostrum(!(alive = event.alive))
+			nostrum(true)
 		}, 1900)
 	})
 
