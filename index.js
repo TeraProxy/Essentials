@@ -64,19 +64,15 @@ module.exports = function Essentials(dispatch) {
 	
 	dispatch.hook('S_CREATURE_LIFE', 1, event => {
 		if(event.target.equals(cid) && alive != event.alive) {
-			alive = event.alive
+			setTimeout(function () {
+				nostrum(!(alive = event.alive))
+			}, 1900)
 			
 			if(!alive) {
 				nextUse = 0
 				mounted = inContract = false
 			}
 		}
-	})
-	
-	dispatch.hook('C_REVIVE_NOW', 1, (event) => {
-		setTimeout(function () {
-			nostrum(true)
-		}, 1900)
 	})
 
 	dispatch.hook('S_MOUNT_VEHICLE', 1, mount.bind(null, true))
