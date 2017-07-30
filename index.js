@@ -5,7 +5,8 @@ const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_H = 4031,
 	BUFF_CCB = 4610,
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time between 10 and 25 minutes
-	RANDOM_SHORT = [15000, 20000] // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
+	RANDOM_SHORT = [15000, 20000], // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
+	BUFF_GODDESS = 1134
 
 module.exports = function Essentials(dispatch) {
 	let cid = null,
@@ -74,6 +75,11 @@ module.exports = function Essentials(dispatch) {
 			}
 		}
 	})
+	
+	dispatch.hook('C_USE_ITEM', (event) => {
+		if(event.item == 200529 || event.item == 60260 || event.item == 160322)
+			nostrum(true)
+	})
 
 	dispatch.hook('S_MOUNT_VEHICLE', 1, mount.bind(null, true))
 	dispatch.hook('S_UNMOUNT_VEHICLE', 1, mount.bind(null, false))
@@ -94,9 +100,17 @@ module.exports = function Essentials(dispatch) {
 			if (type == 'S_ABNORMALITY_BEGIN') {
 				hasccb = true
 			}
-			if (type == 'S_ABNORMALITY_END') {
+			else if (type == 'S_ABNORMALITY_END') {
 				hasccb = false
 				ccb()
+			}
+		}
+		if(event.target.equals(cid) && (event.id == BUFF_GODDESS)) {
+			if(type == 'S_ABNORMALITY_BEGIN') {
+				nostrum(true)
+			}
+			else if (type == 'S_ABNORMALITY_END') {
+				nostrum()
 			}
 		}
 	}
