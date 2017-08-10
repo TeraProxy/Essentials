@@ -1,4 +1,5 @@
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
+const Command = require('command')
 
 const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_TD = 4030,
