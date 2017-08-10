@@ -5,8 +5,7 @@ const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_H = 4031,
 	BUFF_CCB = 4610,
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time between 10 and 25 minutes
-	RANDOM_SHORT = [15000, 20000], // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
-	BUFF_GODDESS = 1134
+	RANDOM_SHORT = [15000, 20000] // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
 
 module.exports = function Essentials(dispatch) {
 	let cid = null,
@@ -67,18 +66,13 @@ module.exports = function Essentials(dispatch) {
 		if(event.target.equals(cid) && alive != event.alive) {
 			setTimeout(function () {
 				nostrum(!(alive = event.alive))
-			}, 1900)
+			}, 2000)
 			
 			if(!alive) {
 				nextUse = 0
 				mounted = inContract = false
 			}
 		}
-	})
-	
-	dispatch.hook('C_USE_ITEM', (event) => {
-		if(event.item == 200529 || event.item == 60260 || event.item == 160322)
-			nostrum(true)
 	})
 
 	dispatch.hook('S_MOUNT_VEHICLE', 1, mount.bind(null, true))
@@ -103,14 +97,6 @@ module.exports = function Essentials(dispatch) {
 			else if (type == 'S_ABNORMALITY_END') {
 				hasccb = false
 				ccb()
-			}
-		}
-		if(event.target.equals(cid) && (event.id == BUFF_GODDESS)) {
-			if(type == 'S_ABNORMALITY_BEGIN') {
-				nostrum(true)
-			}
-			else if (type == 'S_ABNORMALITY_END') {
-				nostrum()
 			}
 		}
 	}
@@ -225,6 +211,20 @@ module.exports = function Essentials(dispatch) {
 				console.log('Essentials disabled.')
 			}
 			return false
+		}
+	})
+	
+	const command = Command(dispatch)
+	command.add('essentials', function() {
+		if(!enabled) {
+			enabled = true
+			message('Essentials <font color="#56B4E9">enabled</font>.')
+			console.log('Essentials enabled.')
+		}
+		else {
+			enabled = false
+			message('Essentials <font color="#E69F00">disabled</font>.')
+			console.log('Essentials disabled.')
 		}
 	})
 }
