@@ -10,7 +10,6 @@ const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 
 module.exports = function Essentials(dispatch) {
 	let cid = null,
-		player = '',
 		slot = -1,
 		timeout = null,
 		timeoutCCB = null,
@@ -26,7 +25,6 @@ module.exports = function Essentials(dispatch) {
 
 	dispatch.hook('S_LOGIN', 1, event => {
 		({cid} = event)
-		player = event.name
 		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 		setTimeout(ccb, 20000) // check if you have a CCB 20 seconds after login
 	})
@@ -169,63 +167,10 @@ module.exports = function Essentials(dispatch) {
 	// ### Chat Hook ### //
 	// ################# //
 	
-	dispatch.hook('C_WHISPER', 1, (event) => {
-		if(event.target.toUpperCase() === "!essentials".toUpperCase()) {
-			if (/^<FONT>on?<\/FONT>$/i.test(event.message)) {
-				enabled = true
-				message('Essentials <font color="#56B4E9">enabled</font>.')
-			}
-			else if (/^<FONT>off?<\/FONT>$/i.test(event.message)) {
-				enabled = false
-				message('Essentials <font color="#E69F00">disabled</font>.')
-			}
-			else message('Commands:<br>'
-								+ ' "on" (enable Essentials),<br>'
-								+ ' "off" (disable Essentials)'
-						)
-			return false
-		}
-	})
-	
-	function message(msg) {
-		dispatch.toClient('S_WHISPER', 1, {
-			player: cid,
-			unk1: 0,
-			gm: 0,
-			unk2: 0,
-			author: '!Essentials',
-			recipient: player,
-			message: msg
-		})
-	}
-	
-	dispatch.hook('C_CHAT', 1, event => {
-		if(/^<FONT>!essentials<\/FONT>$/i.test(event.message)) {
-			if(!enabled) {
-				enabled = true
-				message('Essentials <font color="#56B4E9">enabled</font>.')
-				console.log('Essentials enabled.')
-			}
-			else {
-				enabled = false
-				message('Essentials <font color="#E69F00">disabled</font>.')
-				console.log('Essentials disabled.')
-			}
-			return false
-		}
-	})
-	
 	const command = Command(dispatch)
-	command.add('essentials', function() {
-		if(!enabled) {
-			enabled = true
-			message('Essentials <font color="#56B4E9">enabled</font>.')
-			console.log('Essentials enabled.')
-		}
-		else {
-			enabled = false
-			message('Essentials <font color="#E69F00">disabled</font>.')
-			console.log('Essentials disabled.')
-		}
+	command.add('essentials', () => {
+		enabled = !enabled
+		command.message('[Essentials] ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+		console.log('[Essentials] ' + (enabled ? 'enabled' : 'disabled'))
 	})
 }
