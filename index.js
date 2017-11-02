@@ -1,3 +1,4 @@
+// Version 1.2.2
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 const Command = require('command')
 
@@ -5,6 +6,7 @@ const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
 	BUFF_NOSTRUM_TD = 4030,
 	BUFF_NOSTRUM_H = 4031,
 	BUFF_CCB = 4610,
+	BUFF_ConCB = 5020003,
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time between 10 and 25 minutes
 	RANDOM_SHORT = [15000, 20000] // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
 
@@ -89,7 +91,7 @@ module.exports = function Essentials(dispatch) {
 				nostrum()
 			}
 		}
-		if(event.target.equals(cid) && (event.id == BUFF_CCB)) {
+		if(event.target.equals(cid) && (event.id == BUFF_CCB || event.id == BUFF_ConCB)) {
 			if (type == 'S_ABNORMALITY_BEGIN') {
 				hasccb = true
 			}

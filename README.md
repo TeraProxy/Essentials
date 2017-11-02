@@ -18,6 +18,8 @@ The script makes sure that you are not dead, mounted, in a battleground or in a 
 Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi  
   
 ## Changelog
+### 1.2.2
+* [*] Fixed trying to use CCB when players already have the new Elite CCB running
 ### 1.2.1
 * [*] Full conversion to Pinkie Pie's command module
 ### 1.2.0
