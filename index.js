@@ -1,4 +1,4 @@
-// Version 1.2.2
+// Version 1.2.3
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 const Command = require('command')
 
@@ -45,7 +45,7 @@ module.exports = function Essentials(dispatch) {
 			}
 	})
 
-	dispatch.hook('S_ABNORMALITY_BEGIN', 1, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
+	dispatch.hook('S_ABNORMALITY_BEGIN', 2, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
 	dispatch.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
 	dispatch.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
 
