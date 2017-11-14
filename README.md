@@ -1,3 +1,6 @@
+##### :heavy_exclamation_mark: Elin Gunner Patch Info :heavy_exclamation_mark:
+Starting with this patch only a limited number of opcodes are mapped by default and most mods will not work when the update hits. This was necessary to prevent people from using exploits. Please be patient while the required opcodes for this module will be added.
+
 # Essentials
 A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
   
