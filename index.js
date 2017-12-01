@@ -1,4 +1,4 @@
-// Version 1.3.0
+// Version 1.3.1
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 const Command = require('command')
 
@@ -70,9 +70,7 @@ module.exports = function Essentials(dispatch) {
 	
 	dispatch.hook('S_CREATURE_LIFE', 1, event => {
 		if(event.target.equals(cid) && alive != event.alive) {
-			setTimeout(() => {
-				nostrum(!(alive = event.alive))
-			}, 2000)
+			nostrum(!(alive = event.alive))
 			
 			if(!alive) {
 				nextUse = 0
