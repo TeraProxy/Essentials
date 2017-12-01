@@ -1,14 +1,15 @@
-// Version 1.2.3
+// Version 1.3.0
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 const Command = require('command')
 
-const ITEMS_NOSTRUM = 184659, // EU 152898, NA 184659, RU 201005
-	BUFF_NOSTRUM_TD = 4030,
-	BUFF_NOSTRUM_H = 4031,
-	BUFF_CCB = 4610,
-	BUFF_ConCB = 5020003,
-	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time between 10 and 25 minutes
-	RANDOM_SHORT = [15000, 20000] // Random Nostrum reapplication time after loading screen between 15 and 20 seconds
+const ITEMS_NOSTRUM = [152898, 184659, 201005], // EU 152898, NA 184659, RU 201005
+	BUFF_BLESSING = 1134,
+	BUFF_NOSTRUM_TD = 4030, // Nostrum abnormality for Tanks and Damage Dealers
+	BUFF_NOSTRUM_H = 4031, // Nostrum abnormality for Healers
+	BUFF_CCB = 4610, // Complete Crystalbind abnormality
+	BUFF_ConCB = 5020003, // Continuous Crystalbind abnormality
+	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time (10 - 25 minutes)
+	RANDOM_SHORT = [4000, 8000] // Random Nostrum reapplication time after loading (4 - 8 seconds)
 
 module.exports = function Essentials(dispatch) {
 	let cid = null,
@@ -23,23 +24,24 @@ module.exports = function Essentials(dispatch) {
 		inContract = false,
 		inBG = false,
 		hasccb = false,
-		enabled = true
+		enabled = true,
+		iAmBlessed = false
 
 	dispatch.hook('S_LOGIN', 1, event => {
 		({cid} = event)
-		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
-		setTimeout(ccb, 20000) // check if you have a CCB 20 seconds after login
+		dispatch.hookOnce('C_PLAYER_LOCATION', 1, () => {
+			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
+			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
+		})
 	})
 
 	dispatch.hook('S_RETURN_TO_LOBBY', 1, event => { nostrum(true) })
 
 	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
-			if(ITEMS_NOSTRUM == item.item) {
+			if(ITEMS_NOSTRUM.includes(item.item)) {
 				slot = item.slot
-
 				if(item.cooldown) cooldown = Date.now() + item.cooldown
-
 				item.cooldown = 0 // Cooldowns from this packet don't seem to do anything except freeze your client briefly
 				return true
 			}
@@ -53,6 +55,7 @@ module.exports = function Essentials(dispatch) {
 
 	dispatch.hook('S_LOAD_TOPO', 1, event => {
 		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
+		
 		mounted = inContract = false
 		inBG = event.zone == bgZone
 
@@ -60,12 +63,14 @@ module.exports = function Essentials(dispatch) {
 	})
 	
 	dispatch.hook('S_SPAWN_ME', 1, event => { 
-		nostrum(!(alive = event.alive))
+		dispatch.hookOnce('C_PLAYER_LOCATION', 1, () => {
+			nostrum(!(alive = event.alive))
+		})
 	})
 	
 	dispatch.hook('S_CREATURE_LIFE', 1, event => {
 		if(event.target.equals(cid) && alive != event.alive) {
-			setTimeout(function () {
+			setTimeout(() => {
 				nostrum(!(alive = event.alive))
 			}, 2000)
 			
@@ -92,12 +97,20 @@ module.exports = function Essentials(dispatch) {
 			}
 		}
 		if(event.target.equals(cid) && (event.id == BUFF_CCB || event.id == BUFF_ConCB)) {
-			if (type == 'S_ABNORMALITY_BEGIN') {
-				hasccb = true
-			}
-			else if (type == 'S_ABNORMALITY_END') {
+			if (type == 'S_ABNORMALITY_END') {
 				hasccb = false
 				ccb()
+			}
+			else hasccb = true
+		}
+		if(event.target.equals(cid) && (event.id == BUFF_BLESSING)) {
+			if (type == 'S_ABNORMALITY_END') {
+				iAmBlessed = false
+				nextUse = 0
+				nostrum()
+			}
+			else {
+				iAmBlessed = true
 			}
 		}
 	}
@@ -112,7 +125,7 @@ module.exports = function Essentials(dispatch) {
 
 	function nostrum(disable) {
 		clearTimeout(timeout)
-		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1) {
+		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1 && !iAmBlessed) {
 			timeout = setTimeout(useNostrum, nextUse - Date.now())
 		}
 	}
@@ -125,12 +138,10 @@ module.exports = function Essentials(dispatch) {
 	}
 
 	function useNostrum() {
-		if(!enabled) return
-		
 		let time = Date.now()
 
 		if(time >= cooldown) {
-			dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
+			if(enabled) dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
 			nextUse = Date.now() + randomNumber(RANDOM_MIN_MAX)
 			nostrum()
 		}

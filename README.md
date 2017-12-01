@@ -18,6 +18,9 @@ The script makes sure that you are not dead, mounted, in a battleground or in a 
 Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi  
   
 ## Changelog
+### 1.3.0
+* [+] The random timer for Nostrum now waits for loading to be finished before it starts instead of being hardcoded
+* [+] Will now wait until your Goddess Blessing buff ended before it uses Nostrum so you stay immune to damage
 ### 1.2.3
 * [*] Using newer version of S_ABNORMALITY_BEGIN hook
 ### 1.2.2
