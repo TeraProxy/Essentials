@@ -1,3 +1,7 @@
+##### :heavy_exclamation_mark: Patch Info :heavy_exclamation_mark:
+This module should be working with the latest https://github.com/meishuu/tera-data.  
+Please always keep your tera-data up-to-date. 
+
 # Essentials
 A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
   
