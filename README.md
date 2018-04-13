@@ -25,6 +25,8 @@ The script makes sure that you are not dead, mounted, in a battleground or in a 
 Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi  
   
 ## Changelog
+### 1.3.2
+* [*] Updated hook versions for compatibility with the latest Tera-Proxy programs
 ### 1.3.1
 * [*] Fixed an issue of Nostrum not being reapplied when ressurecting quickly with Grace/Vow
 ### 1.3.0

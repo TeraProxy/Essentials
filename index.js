@@ -1,5 +1,6 @@
-// Version 1.3.1
+// Version 1.3.2
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
+
 const Command = require('command')
 
 const ITEMS_NOSTRUM = [152898, 184659, 201005], // EU 152898, NA 184659, RU 201005
@@ -27,15 +28,15 @@ module.exports = function Essentials(dispatch) {
 		enabled = true,
 		iAmBlessed = false
 
-	dispatch.hook('S_LOGIN', 1, event => {
-		({cid} = event)
+	dispatch.hook('S_LOGIN', 10, event => {
+		cid = event.gameId
 		dispatch.hookOnce('C_PLAYER_LOCATION', 1, () => {
 			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
 		})
 	})
 
-	dispatch.hook('S_RETURN_TO_LOBBY', 1, event => { nostrum(true) })
+	dispatch.hook('S_RETURN_TO_LOBBY', 'raw', () => { nostrum(true) })
 
 	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
@@ -53,7 +54,7 @@ module.exports = function Essentials(dispatch) {
 
 	dispatch.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, event => { bgZone = event.zone })
 
-	dispatch.hook('S_LOAD_TOPO', 1, event => {
+	dispatch.hook('S_LOAD_TOPO', 3, event => {
 		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 		
 		mounted = inContract = false
@@ -62,14 +63,14 @@ module.exports = function Essentials(dispatch) {
 		nostrum(true)
 	})
 	
-	dispatch.hook('S_SPAWN_ME', 1, event => { 
-		dispatch.hookOnce('C_PLAYER_LOCATION', 1, () => {
+	dispatch.hook('S_SPAWN_ME', 2, event => { 
+		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
 			nostrum(!(alive = event.alive))
 		})
 	})
 	
-	dispatch.hook('S_CREATURE_LIFE', 1, event => {
-		if(event.target.equals(cid) && alive != event.alive) {
+	dispatch.hook('S_CREATURE_LIFE', 2, event => {
+		if(event.gameId.equals(cid) && alive != event.alive) {
 			nostrum(!(alive = event.alive))
 			
 			if(!alive) {
@@ -79,8 +80,8 @@ module.exports = function Essentials(dispatch) {
 		}
 	})
 
-	dispatch.hook('S_MOUNT_VEHICLE', 1, mount.bind(null, true))
-	dispatch.hook('S_UNMOUNT_VEHICLE', 1, mount.bind(null, false))
+	dispatch.hook('S_MOUNT_VEHICLE', 2, mount.bind(null, true))
+	dispatch.hook('S_UNMOUNT_VEHICLE', 2, mount.bind(null, false))
 
 	dispatch.hook('S_REQUEST_CONTRACT', 1, contract.bind(null, true))
 	dispatch.hook('S_ACCEPT_CONTRACT', 1, contract.bind(null, false))
@@ -114,7 +115,7 @@ module.exports = function Essentials(dispatch) {
 	}
 
 	function mount(enter, event) {
-		if(event.target.equals(cid)) nostrum(mounted = enter)
+		if(event.gameId.equals(cid)) nostrum(mounted = enter)
 	}
 
 	function contract(enter) {
@@ -148,28 +149,26 @@ module.exports = function Essentials(dispatch) {
 	
 	function useCCB() {
 		if(!enabled) return
-		dispatch.toServer('C_USE_ITEM', 1, {
+		dispatch.toServer('C_USE_ITEM', 2, {
 			ownerId: cid,
-			item: 70000,
-			id: 0,
-			unk1: 0,
-			unk2: 0,
-			unk3: 0,
-			unk4: 1,
-			unk5: 0,
-			unk6: 0,
-			unk7: 0,
+			id: 70000,
+			uniqueId: 0,
+			targetId: 0,
+			amount: 1,
+			targetX: 0,
+			targetY: 0,
+			targetZ: 0,
 			x: 0, 
 			y: 0, 
 			z: 0, 
 			w: 0, 
-			unk8: 0,
-			unk9: 0,
-			unk10: 0,
-			unk11: 1
+			unk1: 0,
+			unk2: 0,
+			unk3: 0,
+			unk4: 1
 		})
 	}
-	
+
 	function randomNumber([min, max]) {
 		return Math.floor(Math.random() * (max - min + 1) + min)
 	}
