@@ -1,5 +1,5 @@
 ##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Working on NA Counterpunch patch with the latest https://github.com/meishuu/tera-data.  
+Working on NA Godsfall patch with the latest https://github.com/meishuu/tera-data.  
 Please always keep your tera-data up-to-date.  
 Other regions will work if the opcodes are mapped but I personally only test modules on NA.  
 
