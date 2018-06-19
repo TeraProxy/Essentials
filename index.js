@@ -1,9 +1,13 @@
-// Version 1.3.2
+// Version 1.3.3
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
-const Command = require('command')
+'use strict'
 
-const ITEMS_NOSTRUM = [152898, 184659, 201005], // EU 152898, NA 184659, RU 201005
+const Command = require('command'),
+	GameState = require('tera-game-state')
+
+const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, ?, TH
+	ITEM_CCB = 70000,
 	BUFF_BLESSING = 1134,
 	BUFF_NOSTRUM_TD = 4030, // Nostrum abnormality for Tanks and Damage Dealers
 	BUFF_NOSTRUM_H = 4031, // Nostrum abnormality for Healers
@@ -13,7 +17,10 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005], // EU 152898, NA 184659, RU 2010
 	RANDOM_SHORT = [4000, 8000] // Random Nostrum reapplication time after loading (4 - 8 seconds)
 
 module.exports = function Essentials(dispatch) {
-	let cid = null,
+	const command = Command(dispatch),
+		game = GameState(dispatch)
+
+	let gameId = null,
 		slot = -1,
 		timeout = null,
 		timeoutCCB = null,
@@ -28,15 +35,32 @@ module.exports = function Essentials(dispatch) {
 		enabled = true,
 		iAmBlessed = false
 
-	dispatch.hook('S_LOGIN', 10, event => {
-		cid = event.gameId
-		dispatch.hookOnce('C_PLAYER_LOCATION', 1, () => {
+	// ############# //
+	// ### Hooks ### //
+	// ############# //
+
+	game.on('enter_game', () => {
+		gameId = game.me.gameId
+		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
 			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
 		})
 	})
 
-	dispatch.hook('S_RETURN_TO_LOBBY', 'raw', () => { nostrum(true) })
+	game.on('enter_character_lobby', () => { nostrum(true) })
+	
+	game.on('enter_loading_screen', () => {
+		mounted = inContract = false
+		inBG = game.me.zone == bgZone
+
+		nostrum(true)
+	})
+
+	game.on('leave_loading_screen', () => {
+		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
+			nostrum(!(alive = game.me.alive))
+		})
+	})
 
 	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
@@ -54,23 +78,8 @@ module.exports = function Essentials(dispatch) {
 
 	dispatch.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, event => { bgZone = event.zone })
 
-	dispatch.hook('S_LOAD_TOPO', 3, event => {
-		nextUse = Date.now() + randomNumber(RANDOM_SHORT)
-		
-		mounted = inContract = false
-		inBG = event.zone == bgZone
-
-		nostrum(true)
-	})
-	
-	dispatch.hook('S_SPAWN_ME', 2, event => { 
-		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
-			nostrum(!(alive = event.alive))
-		})
-	})
-	
 	dispatch.hook('S_CREATURE_LIFE', 2, event => {
-		if(event.gameId.equals(cid) && alive != event.alive) {
+		if(game.me.is(event.gameId) && alive != event.alive) {
 			nostrum(!(alive = event.alive))
 			
 			if(!alive) {
@@ -88,34 +97,36 @@ module.exports = function Essentials(dispatch) {
 	dispatch.hook('S_REJECT_CONTRACT', 1, contract.bind(null, false))
 	dispatch.hook('S_CANCEL_CONTRACT', 1, contract.bind(null, false))
 
+	// ################# //
+	// ### Functions ### //
+	// ################# //
+
 	function abnormality(type, event) {
-		if(event.target.equals(cid) && (event.id == BUFF_NOSTRUM_TD || event.id == BUFF_NOSTRUM_H)) {
+		if(game.me.is(event.target) && (event.id == BUFF_NOSTRUM_TD || event.id == BUFF_NOSTRUM_H)) {
 			if (type == 'S_ABNORMALITY_END') {
 				nextUse = 0
 				nostrum()
 			}
 		}
-		if(event.target.equals(cid) && (event.id == BUFF_CCB || event.id == BUFF_ConCB)) {
+		if(game.me.is(event.target) && (event.id == BUFF_CCB || event.id == BUFF_ConCB)) {
 			if (type == 'S_ABNORMALITY_END') {
 				hasccb = false
 				ccb()
 			}
 			else hasccb = true
 		}
-		if(event.target.equals(cid) && (event.id == BUFF_BLESSING)) {
+		if(game.me.is(event.target) && event.id == BUFF_BLESSING) {
 			if (type == 'S_ABNORMALITY_END') {
 				iAmBlessed = false
 				nextUse = 0
 				nostrum()
 			}
-			else {
-				iAmBlessed = true
-			}
+			else iAmBlessed = true
 		}
 	}
 
 	function mount(enter, event) {
-		if(event.gameId.equals(cid)) nostrum(mounted = enter)
+		if(game.me.is(event.gameId)) nostrum(mounted = enter)
 	}
 
 	function contract(enter) {
@@ -124,15 +135,14 @@ module.exports = function Essentials(dispatch) {
 
 	function nostrum(disable) {
 		clearTimeout(timeout)
-		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1 && !iAmBlessed) {
+		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1 && !iAmBlessed)
 			timeout = setTimeout(useNostrum, nextUse - Date.now())
-		}
 	}
 
 	function ccb() {
 		clearTimeout(timeoutCCB)
 		
-		if(!hasccb && alive && !mounted && !inContract && !inBG) useCCB()
+		if(!hasccb && alive && !mounted && !inContract && !inBG) useItem(ITEM_CCB)
 		else if(!hasccb) timeoutCCB = setTimeout(ccb, 10000) // retry in 10 seconds if you were busy
 	}
 
@@ -147,11 +157,11 @@ module.exports = function Essentials(dispatch) {
 		else timeout = setTimeout(useNostrum, cooldown - time)
 	}
 	
-	function useCCB() {
+	function useItem(item) {
 		if(!enabled) return
 		dispatch.toServer('C_USE_ITEM', 2, {
-			ownerId: cid,
-			id: 70000,
+			ownerId: gameId,
+			id: item,
 			uniqueId: 0,
 			targetId: 0,
 			amount: 1,
@@ -172,12 +182,11 @@ module.exports = function Essentials(dispatch) {
 	function randomNumber([min, max]) {
 		return Math.floor(Math.random() * (max - min + 1) + min)
 	}
-	
-	// ################# //
-	// ### Chat Hook ### //
-	// ################# //
-	
-	const command = Command(dispatch)
+
+	// ################ //
+	// ### Commands ### //
+	// ################ //
+
 	command.add('essentials', () => {
 		enabled = !enabled
 		command.message('[Essentials] ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
