@@ -1,34 +1,33 @@
-// Version 1.3.3
+// Version 1.3.4
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 'use strict'
 
 const Command = require('command'),
-	GameState = require('tera-game-state')
+	GameState = require('tera-game-state'),
+	elite = require('./config.json').elite
 
 const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, ?, TH
+	ITEMS_PLEB_NOSTRUM = 200999,
 	ITEM_CCB = 70000,
 	BUFF_BLESSING = 1134,
-	BUFF_NOSTRUM_TD = 4030, // Nostrum abnormality for Tanks and Damage Dealers
-	BUFF_NOSTRUM_H = 4031, // Nostrum abnormality for Healers
+	BUFF_NOSTRUM_TD = [4020, 4030], // Nostrum abnormality for Tanks and Damage Dealers (pleb, elite)
+	BUFF_NOSTRUM_H = [4021, 4031], // Nostrum abnormality for Healers (pleb, elite)
 	BUFF_CCB = 4610, // Complete Crystalbind abnormality
 	BUFF_ConCB = 5020003, // Continuous Crystalbind abnormality
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time (10 - 25 minutes)
 	RANDOM_SHORT = [4000, 8000] // Random Nostrum reapplication time after loading (4 - 8 seconds)
 
-module.exports = function Essentials(dispatch) {
+module.exports = function essentials(dispatch) {
 	const command = Command(dispatch),
 		game = GameState(dispatch)
 
-	let gameId = null,
-		slot = -1,
+	let slot = -1,
 		timeout = null,
 		timeoutCCB = null,
 		cooldown = 0,
 		nextUse = 0,
 		bgZone = -1,
-		alive = false,
-		mounted = false,
 		inContract = false,
 		inBG = false,
 		hasccb = false,
@@ -40,27 +39,31 @@ module.exports = function Essentials(dispatch) {
 	// ############# //
 
 	game.on('enter_game', () => {
-		gameId = game.me.gameId
 		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
 			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
 		})
 	})
+	game.on('leave_game', () => { nostrum(true) })
 
-	game.on('enter_character_lobby', () => { nostrum(true) })
-	
 	game.on('enter_loading_screen', () => {
-		mounted = inContract = false
+		inContract = false
 		inBG = game.me.zone == bgZone
-
 		nostrum(true)
 	})
-
 	game.on('leave_loading_screen', () => {
-		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
-			nostrum(!(alive = game.me.alive))
-		})
+		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => { nostrum() })
 	})
+	
+	game.me.on('die', () => {
+		inContract = false
+		nextUse = 0
+		nostrum()
+	})
+	game.me.on('resurrect', () => { nostrum() })
+	
+	game.me.on('mount', () => { nostrum() })
+	game.me.on('dismount', () => { nostrum() })
 
 	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
@@ -78,20 +81,6 @@ module.exports = function Essentials(dispatch) {
 
 	dispatch.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, event => { bgZone = event.zone })
 
-	dispatch.hook('S_CREATURE_LIFE', 2, event => {
-		if(game.me.is(event.gameId) && alive != event.alive) {
-			nostrum(!(alive = event.alive))
-			
-			if(!alive) {
-				nextUse = 0
-				mounted = inContract = false
-			}
-		}
-	})
-
-	dispatch.hook('S_MOUNT_VEHICLE', 2, mount.bind(null, true))
-	dispatch.hook('S_UNMOUNT_VEHICLE', 2, mount.bind(null, false))
-
 	dispatch.hook('S_REQUEST_CONTRACT', 1, contract.bind(null, true))
 	dispatch.hook('S_ACCEPT_CONTRACT', 1, contract.bind(null, false))
 	dispatch.hook('S_REJECT_CONTRACT', 1, contract.bind(null, false))
@@ -102,31 +91,25 @@ module.exports = function Essentials(dispatch) {
 	// ################# //
 
 	function abnormality(type, event) {
-		if(game.me.is(event.target) && (event.id == BUFF_NOSTRUM_TD || event.id == BUFF_NOSTRUM_H)) {
-			if (type == 'S_ABNORMALITY_END') {
-				nextUse = 0
-				nostrum()
+		if(game.me.is(event.target)) {
+			if(BUFF_NOSTRUM_TD.includes(event.id) || BUFF_NOSTRUM_H.includes(event.id)) {
+				if(type == 'S_ABNORMALITY_END') {
+					nextUse = 0
+					nostrum()
+				}
+			}
+			if(event.id == BUFF_CCB || event.id == BUFF_ConCB) {
+				hasccb = type != 'S_ABNORMALITY_END'
+				if(!hasccb) ccb()
+			}
+			if(event.id == BUFF_BLESSING) {
+				iAmBlessed = type != 'S_ABNORMALITY_END'
+				if(!iAmBlessed) {
+					nextUse = 0
+					nostrum()
+				}
 			}
 		}
-		if(game.me.is(event.target) && (event.id == BUFF_CCB || event.id == BUFF_ConCB)) {
-			if (type == 'S_ABNORMALITY_END') {
-				hasccb = false
-				ccb()
-			}
-			else hasccb = true
-		}
-		if(game.me.is(event.target) && event.id == BUFF_BLESSING) {
-			if (type == 'S_ABNORMALITY_END') {
-				iAmBlessed = false
-				nextUse = 0
-				nostrum()
-			}
-			else iAmBlessed = true
-		}
-	}
-
-	function mount(enter, event) {
-		if(game.me.is(event.gameId)) nostrum(mounted = enter)
 	}
 
 	function contract(enter) {
@@ -135,14 +118,14 @@ module.exports = function Essentials(dispatch) {
 
 	function nostrum(disable) {
 		clearTimeout(timeout)
-		if(!disable && alive && !mounted && !inContract && !inBG && slot != -1 && !iAmBlessed)
+		if(!disable && game.me.alive && !game.me.mounted && !inContract && !inBG && slot != -1 && !iAmBlessed)
 			timeout = setTimeout(useNostrum, nextUse - Date.now())
 	}
 
 	function ccb() {
 		clearTimeout(timeoutCCB)
 		
-		if(!hasccb && alive && !mounted && !inContract && !inBG) useItem(ITEM_CCB)
+		if(!hasccb && game.me.alive && !game.me.mounted && !inContract && !inBG) useItem(ITEM_CCB)
 		else if(!hasccb) timeoutCCB = setTimeout(ccb, 10000) // retry in 10 seconds if you were busy
 	}
 
@@ -150,7 +133,10 @@ module.exports = function Essentials(dispatch) {
 		let time = Date.now()
 
 		if(time >= cooldown) {
-			if(enabled) dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
+			if(enabled) {
+				if(elite) dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
+				else useItem(ITEMS_PLEB_NOSTRUM)
+			}
 			nextUse = Date.now() + randomNumber(RANDOM_MIN_MAX)
 			nostrum()
 		}
@@ -160,7 +146,7 @@ module.exports = function Essentials(dispatch) {
 	function useItem(item) {
 		if(!enabled) return
 		dispatch.toServer('C_USE_ITEM', 2, {
-			ownerId: gameId,
+			ownerId: game.me.gameId,
 			id: item,
 			uniqueId: 0,
 			targetId: 0,

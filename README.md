@@ -20,7 +20,7 @@ If you enjoy my work and wish to support future development, feel free to drop m
 A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
 
 ## Usage
-If you are playing on a non-NA server, you need to replace "ITEMS_NOSTRUM" in "index.js" with the matching item id.  
+If you don't have Elite/Club status, you can open up "config.json" and change "elite" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
   
 While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
 This serves as the script's command interface.  
@@ -36,6 +36,11 @@ The script makes sure that you are not dead, mounted, in a battleground or in a 
 Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 ## Changelog
+<details>
+### 1.3.4
+* [+] Added option to use Prime Battle Solution instead of Everful Nostrum
+* [*] Fixed a weird case-sensitivity issue
+* [*] More code cleanup
 ### 1.3.3
 * [+] Now supports all regions
 * [+] Rewrote code to use Caali's "tera-game-state" module in order to reduce overhead
@@ -61,3 +66,4 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 * [+] Added !essentials command to toggle between "on" and "off" in non-whisper chats
 ### 1.0.0
 * [~] Initial Release
+</details>
