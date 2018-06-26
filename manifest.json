@@ -4,7 +4,7 @@
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
 		"README.md": "0ee25124196be9619d8e6c7694c09a11f9321f618d2dd84b199bfc5c6a8702dc",
 		"module.json": "4475b48560557f54b45de6542301c25a0f6fbb50d2d4489906ded2ddd8ac7f5f",
-		"config.json": "df657ab942d4ab588649efed8d63682958d4de73cdaa14005b65cb7730787bb5"
+		"config.json": {"overwrite": false, "hash": "df657ab942d4ab588649efed8d63682958d4de73cdaa14005b65cb7730787bb5"}
 	},
 	"defs": {
 		"C_PCBANGINVENTORY_USE_SLOT": 1,
