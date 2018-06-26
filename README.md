@@ -37,6 +37,7 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 ## Changelog
 <details>
+
 ### 1.3.4
 * [+] Added option to use Prime Battle Solution instead of Everful Nostrum
 * [*] Fixed a weird case-sensitivity issue
@@ -66,4 +67,5 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 * [+] Added !essentials command to toggle between "on" and "off" in non-whisper chats
 ### 1.0.0
 * [~] Initial Release
+
 </details>
