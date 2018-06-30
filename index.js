@@ -10,7 +10,7 @@ const Command = require('command'),
 const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, ?, TH
 	ITEMS_PLEB_NOSTRUM = 200999,
 	ITEM_CCB = 70000,
-	BUFF_BLESSING = 1134,
+	BUFF_BLESSING = [1134,1136,6006,6016],
 	BUFF_NOSTRUM_TD = [4020, 4030], // Nostrum abnormality for Tanks and Damage Dealers (pleb, elite)
 	BUFF_NOSTRUM_H = [4021, 4031], // Nostrum abnormality for Healers (pleb, elite)
 	BUFF_CCB = 4610, // Complete Crystalbind abnormality
@@ -102,7 +102,7 @@ module.exports = function essentials(dispatch) {
 				hasccb = type != 'S_ABNORMALITY_END'
 				if(!hasccb) ccb()
 			}
-			if(event.id == BUFF_BLESSING) {
+			if(BUFF_BLESSING.includes(event.id)) {
 				iAmBlessed = type != 'S_ABNORMALITY_END'
 				if(!iAmBlessed) {
 					nextUse = 0
