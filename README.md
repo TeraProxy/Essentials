@@ -20,8 +20,8 @@ If you enjoy my work and wish to support future development, feel free to drop m
 A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
 
 ## Usage
-If you don't have Elite/Club status, you can open up "config.json" and change "ELITE" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
-You can change the used non-Elite/Club items by editing the item IDs in "config.json".  
+If you don't have Elite/Club status, you can open up "config_1-3-6.json" and change "elite" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
+You can change the used non-Elite/Club items by editing the item IDs for "ccb" and "nostrum" in "config_1-3-6.json".  
   
 While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
 This serves as the script's command interface.  
