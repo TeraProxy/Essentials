@@ -38,6 +38,8 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 ## Changelog
 <details>
 
+### 1.3.5
+* [*] Fixed trying to use CCB when you are under the influence of the 1h CCB
 ### 1.3.4
 * [+] Added option to use Prime Battle Solution instead of Everful Nostrum
 * [*] Fixed a weird case-sensitivity issue

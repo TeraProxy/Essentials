@@ -1,4 +1,4 @@
-// Version 1.3.4
+// Version 1.3.5
 // Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 'use strict'
@@ -13,8 +13,7 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 8
 	BUFF_BLESSING = 1134,
 	BUFF_NOSTRUM_TD = [4020, 4030], // Nostrum abnormality for Tanks and Damage Dealers (pleb, elite)
 	BUFF_NOSTRUM_H = [4021, 4031], // Nostrum abnormality for Healers (pleb, elite)
-	BUFF_CCB = 4610, // Complete Crystalbind abnormality
-	BUFF_ConCB = 5020003, // Continuous Crystalbind abnormality
+	BUFF_CCB = [4610, 4612, 5020003], // Complete Crystalbind abnormality (12h, 1h, elite)
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time (10 - 25 minutes)
 	RANDOM_SHORT = [4000, 8000] // Random Nostrum reapplication time after loading (4 - 8 seconds)
 
@@ -98,7 +97,7 @@ module.exports = function essentials(dispatch) {
 					nostrum()
 				}
 			}
-			if(event.id == BUFF_CCB || event.id == BUFF_ConCB) {
+			if(BUFF_CCB.includes(event.id)) {
 				hasccb = type != 'S_ABNORMALITY_END'
 				if(!hasccb) ccb()
 			}

@@ -1,8 +1,8 @@
 {
 	"files": {
-		"index.js": "22f11a4112ab57f62677398fc0b72a893f8bbd4a65a5ddfcea84025ea10d572f",
+		"index.js": "d96170ed32c5a90e53fa078224d1beee98afbfe99c117fb19ed30254884de9c0",
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "5b6887a13eab56ab30547046338681843063af40ecf72cb14c356acdd160620f",
+		"README.md": "cac516045935ec10424b56ee391afecee7640f59bd6162ce86d1159c3078291f",
 		"module.json": "4475b48560557f54b45de6542301c25a0f6fbb50d2d4489906ded2ddd8ac7f5f",
 		"config.json": {
 			"overwrite": false,
