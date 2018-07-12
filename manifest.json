@@ -1,13 +1,14 @@
 {
+	"force_clean": true,
 	"files": {
-		"index.js": "d96170ed32c5a90e53fa078224d1beee98afbfe99c117fb19ed30254884de9c0",
-		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "cac516045935ec10424b56ee391afecee7640f59bd6162ce86d1159c3078291f",
-		"module.json": "4475b48560557f54b45de6542301c25a0f6fbb50d2d4489906ded2ddd8ac7f5f",
-		"config.json": {
+		"config_1-3-6.json": {
 			"overwrite": false,
-			"hash": "df657ab942d4ab588649efed8d63682958d4de73cdaa14005b65cb7730787bb5"
-		}
+			"hash": "add4c2e726e87d83b70a4bb057a82d7680f9839d26c3dd7da9acba953e070f9b"
+		},
+		"index.js": "c6e6bb6b35fa3958c83a9c78a1566df4dc84c7503a7dd58a3fe310b27a6ce016",
+		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+		"module.json": "4475b48560557f54b45de6542301c25a0f6fbb50d2d4489906ded2ddd8ac7f5f",
+		"README.md": "71fcb3e47cf75325c263248ebc2fca505fd95cceedce80a542847d10b0064975"
 	},
 	"defs": {
 		"C_PCBANGINVENTORY_USE_SLOT": 1,
@@ -15,14 +16,6 @@
 		"S_ABNORMALITY_BEGIN": 2,
 		"S_ABNORMALITY_END": 1,
 		"S_ABNORMALITY_REFRESH": 1,
-		"S_ACCEPT_CONTRACT": 1,
-		"S_BATTLE_FIELD_ENTRANCE_INFO": 1,
-		"S_CANCEL_CONTRACT": 1,
-		"S_CREATURE_LIFE": 2,
-		"S_MOUNT_VEHICLE": 2,
-		"S_PCBANGINVENTORY_DATALIST": 1,
-		"S_REJECT_CONTRACT": 1,
-		"S_REQUEST_CONTRACT": 1,
-		"S_UNMOUNT_VEHICLE": 2
+		"S_PCBANGINVENTORY_DATALIST": 1
 	}
 }

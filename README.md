@@ -20,7 +20,8 @@ If you enjoy my work and wish to support future development, feel free to drop m
 A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
 
 ## Usage
-If you don't have Elite/Club status, you can open up "config.json" and change "elite" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
+If you don't have Elite/Club status, you can open up "config.json" and change "ELITE" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
+You can change the used non-Elite/Club items by editing the item IDs in "config.json".  
   
 While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
 This serves as the script's command interface.  
@@ -38,11 +39,15 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 ## Changelog
 <details>
 
+### 1.3.6
+* [+] Added option for using different CCB items to config file
+* [+] Added option for using different non-elite nostrums to config file ("ELITE" has to be set to false to use these)
+* [+] Added Phoenix mount revival invincibility check
+* [*] Code optimizations
 ### 1.3.5
 * [*] Fixed trying to use CCB when you are under the influence of the 1h CCB
 ### 1.3.4
 * [+] Added option to use Prime Battle Solution instead of Everful Nostrum
-* [*] Fixed a weird case-sensitivity issue
 * [*] More code cleanup
 ### 1.3.3
 * [+] Now supports all regions
