@@ -98,7 +98,7 @@ module.exports = function Essentials(dispatch) {
 	function nostrum() {
 		clearTimeout(timeoutNostrum)
 		
-		if(game.isIngame && game.me.alive && !game.isInLoadingScreen && !game.me.mounted && !game.contract.active && !game.me.inBattleground && slot && !iAmInvincible)
+		if(game.isIngame && game.me.alive && !game.isInLoadingScreen && !game.me.mounted && !game.contract.active && !game.me.inBattleground && (slot || !ELITE) && !iAmInvincible)
 			timeoutNostrum = setTimeout(useNostrum, nextUse - Date.now())
 	}
 
