@@ -1,17 +1,16 @@
 {
 	"force_clean": true,
 	"files": {
-		"config_1-3-6.json": {
-			"overwrite": false,
-			"hash": "add4c2e726e87d83b70a4bb057a82d7680f9839d26c3dd7da9acba953e070f9b"
-		},
-		"index.js": "c6e6bb6b35fa3958c83a9c78a1566df4dc84c7503a7dd58a3fe310b27a6ce016",
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"module.json": "4475b48560557f54b45de6542301c25a0f6fbb50d2d4489906ded2ddd8ac7f5f",
-		"README.md": "4959689fcbb984dc078436bb244448ae7c9b6606af2c97f17cb3a2dd60e909ac"
+		"README.md": "dee0e93c688f4b4642043a61fb12e55b5c5684616b8405dd2f03867a1985b8cc",
+		"config.json": "f2f129d4bbb4b84f0a85ac5e23720f703e972ffb6a1219112b5dd87f7e9db5ac",
+		"index.js": "9f49f83b3068ed423d1d4f9521578edf7757102fe592e484feb8cd32c73bcf1b",
+		"module.json": "b44bf1fe879aa4c689f1989756c887ba5e20dafffe3b71f787656d5e3bcd2cbc",
+		"settings_migrator.js": "4a96d898023ad7a73f4fe027ef810cae042d3fe867a24a2a3b7413f1aa923d03"
 	},
 	"defs": {
 		"C_PCBANGINVENTORY_USE_SLOT": 1,
+		"C_PLAYER_LOCATION": "raw",
 		"C_USE_ITEM": 3,
 		"S_ABNORMALITY_BEGIN": 2,
 		"S_ABNORMALITY_END": 1,

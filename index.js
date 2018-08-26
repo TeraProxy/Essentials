@@ -1,16 +1,9 @@
-// Version 1.3.6
+// Version 1.3.7
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 'use strict'
 
-const Command = require('command'),
-	GameState = require('tera-game-state'),
-	Config = require('./config_1-3-6')
-
 const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, ?, TH
-	ELITE = Config.elite,
-	ITEM_PLEB_NOSTRUM = Config.nostrum,
-	ITEM_CCB = Config.ccb,
 	BUFF_INVINCIBILITY = [1134, 6007], // Invincibility abnormality (Goddess Blessing, Phoenix)
 	BUFF_NOSTRUM_TD = [4020, 4030], // Nostrum abnormality for Tanks and Damage Dealers (pleb, elite)
 	BUFF_NOSTRUM_H = [4021, 4031], // Nostrum abnormality for Healers (pleb, elite)
@@ -18,10 +11,13 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 8
 	RANDOM_MIN_MAX = [600000, 1500000], // Random Nostrum reapplication time (10 - 25 minutes)
 	RANDOM_SHORT = [4000, 8000] // Random Nostrum reapplication time after loading (4 - 8 seconds)
 
-module.exports = function Essentials(dispatch) {
-	const command = Command(dispatch),
-		game = GameState(dispatch)
-	game.initialize("contract")
+module.exports = function Essentials(mod) {
+
+	const ELITE = mod.settings.elite,
+		ITEM_PLEB_NOSTRUM = mod.settings.nostrum,
+		ITEM_CCB = mod.settings.ccb
+
+	mod.game.initialize("contract")
 
 	let slot = null,
 		timeoutNostrum = null,
@@ -36,26 +32,26 @@ module.exports = function Essentials(dispatch) {
 	// ### Hooks ### //
 	// ############# //
 
-	game.on('enter_game', () => {
+	mod.game.on('enter_game', () => {
 		hasccb = false
 
-		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
+		mod.hookOnce('C_PLAYER_LOCATION', 'raw', () => {
 			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
 		})
 	})
 
-	game.on('leave_loading_screen', () => {
-		dispatch.hookOnce('C_PLAYER_LOCATION', 'raw', () => { nostrum() })
+	mod.game.on('leave_loading_screen', () => {
+		mod.hookOnce('C_PLAYER_LOCATION', 'raw', () => { nostrum() })
 	})
 
-	game.me.on('die', () => { 
+	mod.game.me.on('die', () => { 
 		nextUse = 0
 		nostrum()
 	})
-	game.me.on('resurrect', () => { nostrum() })
+	mod.game.me.on('resurrect', () => { nostrum() })
 
-	dispatch.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
+	mod.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
 			if(ITEMS_NOSTRUM.includes(item.item)) {
 				slot = item.slot
@@ -65,16 +61,16 @@ module.exports = function Essentials(dispatch) {
 			}
 	})
 
-	dispatch.hook('S_ABNORMALITY_BEGIN', 2, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
-	dispatch.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
-	dispatch.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
+	mod.hook('S_ABNORMALITY_BEGIN', 2, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
+	mod.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
+	mod.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
 
 	// ################# //
 	// ### Functions ### //
 	// ################# //
 
 	function abnormality(type, event) {
-		if(game.me.is(event.target)) {
+		if(mod.game.me.is(event.target)) {
 			if(BUFF_NOSTRUM_TD.includes(event.id) || BUFF_NOSTRUM_H.includes(event.id)) {
 				if(type === 'S_ABNORMALITY_END') {
 					nextUse = 0
@@ -98,14 +94,14 @@ module.exports = function Essentials(dispatch) {
 	function nostrum() {
 		clearTimeout(timeoutNostrum)
 		
-		if(game.isIngame && game.me.alive && !game.isInLoadingScreen && !game.me.mounted && !game.contract.active && !game.me.inBattleground && slot && !iAmInvincible)
+		if(mod.game.isIngame && mod.game.me.alive && !mod.game.isInLoadingScreen && !mod.game.me.mounted && !mod.game.contract.active && !mod.game.me.inBattleground && (slot || !ELITE) && !iAmInvincible)
 			timeoutNostrum = setTimeout(useNostrum, nextUse - Date.now())
 	}
 
 	function ccb() {
 		clearTimeout(timeoutCCB)
 		
-		if(!hasccb && game.isIngame && game.me.alive && !game.isInLoadingScreen && !game.me.mounted && !game.contract.active && !game.me.inBattleground) useItem(ITEM_CCB)
+		if(!hasccb && mod.game.isIngame && mod.game.me.alive && !mod.game.isInLoadingScreen && !mod.game.me.mounted && !mod.game.contract.active && !mod.game.me.inBattleground) useItem(ITEM_CCB)
 		else if(!hasccb) timeoutCCB = setTimeout(ccb, 10000) // retry in 10 seconds if we were busy
 	}
 
@@ -114,7 +110,7 @@ module.exports = function Essentials(dispatch) {
 
 		if(time >= cooldown) {
 			if(enabled) {
-				if(ELITE) dispatch.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
+				if(ELITE) mod.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
 				else useItem(ITEM_PLEB_NOSTRUM)
 			}
 			nextUse = Date.now() + randomNumber(RANDOM_MIN_MAX)
@@ -126,8 +122,8 @@ module.exports = function Essentials(dispatch) {
 	function useItem(item) {
 		if(!enabled) return
 		
-		dispatch.toServer('C_USE_ITEM', 3, {
-			gameId: game.me.gameId,
+		mod.toServer('C_USE_ITEM', 3, {
+			gameId: mod.game.me.gameId,
 			id: item,
 			dbid: 0,
 			target: 0,
@@ -150,9 +146,9 @@ module.exports = function Essentials(dispatch) {
 	// ### Commands ### //
 	// ################ //
 
-	command.add('essentials', () => {
+	mod.command.add('essentials', () => {
 		enabled = !enabled
-		command.message('[Essentials] ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+		mod.command.message((enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 		console.log('[Essentials] ' + (enabled ? 'enabled' : 'disabled'))
 	})
 }

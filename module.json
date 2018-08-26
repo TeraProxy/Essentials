@@ -1,4 +1,11 @@
 {
+    "disableAutoUpdate": false,
+    "options": {
+        "niceName": "Essentials",
+        "settingsVersion": 1,
+        "settingsFile": "config.json",
+        "settingsMigrator": "settings_migrator.js"
+    },
     "servers": ["https://raw.githubusercontent.com/TeraProxy/Essentials/master/"],
     "supportUrl": "https://github.com/TeraProxy/Essentials/issues"
 }
