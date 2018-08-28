@@ -1,10 +1,9 @@
 {
-	"force_clean": true,
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "dee0e93c688f4b4642043a61fb12e55b5c5684616b8405dd2f03867a1985b8cc",
+		"README.md": "1ad6a2dec417d7c6ee661957b3840879feab7d35c1de74f8e02882453c553657",
 		"config.json": "f2f129d4bbb4b84f0a85ac5e23720f703e972ffb6a1219112b5dd87f7e9db5ac",
-		"index.js": "9f49f83b3068ed423d1d4f9521578edf7757102fe592e484feb8cd32c73bcf1b",
+		"index.js": "a52864a0c894403bc677107c2818a2eea0a1b042a77d5894631fcbec142a1a26",
 		"module.json": "b44bf1fe879aa4c689f1989756c887ba5e20dafffe3b71f787656d5e3bcd2cbc",
 		"settings_migrator.js": "4a96d898023ad7a73f4fe027ef810cae042d3fe867a24a2a3b7413f1aa923d03"
 	},

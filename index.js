@@ -1,4 +1,4 @@
-// Version 1.3.7
+// Version 1.3.8
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 'use strict'
@@ -39,6 +39,16 @@ module.exports = function Essentials(mod) {
 			nextUse = Date.now() + randomNumber(RANDOM_SHORT)
 			setTimeout(ccb, randomNumber(RANDOM_SHORT)) // check if you have a CCB shortly after moving for the first time
 		})
+	})
+	mod.game.on('leave_game', () => {
+		if (timeoutNostrum) {
+			clearInterval(timeoutNostrum)
+			timeoutNostrum = null
+		}
+		if (timeoutCCB) {
+			clearInterval(timeoutCCB)
+			timeoutCCB = null
+		}
 	})
 
 	mod.game.on('leave_loading_screen', () => {

@@ -31,6 +31,8 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 ## Changelog
 <details>
 
+### 1.3.8
+* [*] Fixed a bug where reapplication intervals were not cleared on disconnect
 ### 1.3.7
 * [*] Fixed non-elite Nostrum not properly applying (thx aurelius88)
 * [~] Code changes due to Caali's recent tera-proxy updates
