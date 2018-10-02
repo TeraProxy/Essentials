@@ -1,5 +1,5 @@
 ##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Should work on all regions as long as the opcodes are mapped but I personally only test modules on NA with Caali's tera-proxy: https://discord.gg/maqBmJV  
+Should work on all regions as long as the opcodes are mapped. Thanks to EME's recent unjustified DMCA actions against developers, opcodes for NA are no longer mapped.
 
 ##### :heavy_exclamation_mark: Installation for Caali's tera-proxy :heavy_exclamation_mark:
 1) Download Essentials: https://github.com/TeraProxy/Essentials/archive/master.zip
@@ -31,6 +31,8 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 ## Changelog
 <details>
 
+### 1.3.9
+* [~] Definition update
 ### 1.3.8
 * [*] Fixed a bug where reapplication intervals were not cleared on disconnect
 ### 1.3.7

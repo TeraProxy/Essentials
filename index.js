@@ -1,4 +1,4 @@
-// Version 1.3.8
+// Version 1.3.9
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 'use strict'
@@ -71,7 +71,7 @@ module.exports = function Essentials(mod) {
 			}
 	})
 
-	mod.hook('S_ABNORMALITY_BEGIN', 2, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
+	mod.hook('S_ABNORMALITY_BEGIN', 3, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
 	mod.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
 	mod.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
 
