@@ -31,6 +31,8 @@ Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 ## Changelog
 <details>
 
+### 1.3.10
+* [*] Support for patch versions < 75
 ### 1.3.9
 * [~] Definition update
 ### 1.3.8
