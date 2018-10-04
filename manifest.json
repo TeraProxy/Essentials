@@ -2,7 +2,6 @@
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
 		"README.md": "65d6456545ad06ac132ddbc25d802a86a18d7ad3bb1a5619d19e715365845d09",
-		"config.json": "f2f129d4bbb4b84f0a85ac5e23720f703e972ffb6a1219112b5dd87f7e9db5ac",
 		"index.js": "b98124e4f05e35662f0901657956ef8d968645dc487f35d51704b3971e65a0b7",
 		"module.json": "b44bf1fe879aa4c689f1989756c887ba5e20dafffe3b71f787656d5e3bcd2cbc",
 		"settings_migrator.js": "4a96d898023ad7a73f4fe027ef810cae042d3fe867a24a2a3b7413f1aa923d03"
