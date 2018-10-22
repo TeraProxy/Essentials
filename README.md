@@ -32,7 +32,7 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 The script makes sure that you are not dead, mounted, in a battleground or in a negotiation before using an item.
 
 ## Credits
-Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
+Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi  
 Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
 ## Changelog
