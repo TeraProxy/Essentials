@@ -2,7 +2,7 @@
     "disableAutoUpdate": false,
     "options": {
         "niceName": "Essentials",
-        "settingsVersion": 1,
+        "settingsVersion": 2,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
     },

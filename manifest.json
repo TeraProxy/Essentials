@@ -1,14 +1,17 @@
 {
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "65d6456545ad06ac132ddbc25d802a86a18d7ad3bb1a5619d19e715365845d09",
-		"index.js": "b98124e4f05e35662f0901657956ef8d968645dc487f35d51704b3971e65a0b7",
-		"module.json": "b44bf1fe879aa4c689f1989756c887ba5e20dafffe3b71f787656d5e3bcd2cbc",
-		"settings_migrator.js": "4a96d898023ad7a73f4fe027ef810cae042d3fe867a24a2a3b7413f1aa923d03"
+		"README.md": "694e0f8fc0bbf35f9386c69074839c74b4414d8fbfbcb14d1a7591894f34d5b6",
+		"config.json": {
+			"overwrite": false,
+			"hash": "a4b1339b7b5438cedc3f91a24e6b845c181c4990f7453f5d6b1822d32ee19f78"
+		},
+		"index.js": "2499119c3bc768e5cef9d72ef2a9c0788fae99dc92f4e14d723f2eb3118b3116",
+		"module.json": "395c3a7be155e332cbfeb2788946f42dc47b195659128bac685813025a192299",
+		"settings_migrator.js": "380eedc5a1e831f62363e4b089a897b0cf606c50b9c5032f9ce2bf5073136a37"
 	},
 	"defs": {
 		"C_PCBANGINVENTORY_USE_SLOT": 1,
-		"C_PLAYER_LOCATION": "raw",
 		"C_USE_ITEM": 3,
 		"S_ABNORMALITY_BEGIN": [2,3],
 		"S_ABNORMALITY_END": 1,

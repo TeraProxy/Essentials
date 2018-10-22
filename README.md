@@ -9,11 +9,17 @@ Should work on all regions as long as the opcodes are mapped. Thanks to EME's re
 If you enjoy my work and wish to support future development, feel free to drop me a small donation: [![Donate](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=A3KBZUCSEQ5RJ&lc=US&item_name=TeraProxy&curency_code=USD&no_note=1&no_shipping=1&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 
 # Essentials
-A tera-proxy module that automatically uses the items "Elite Everful Nostrum" and "Complete Crystal Bind" whenever needed.  
+A tera-proxy module that automatically uses "Nostrum"/"Battle Solution" and "Complete Crystalbind" items whenever needed.  
 
 ## Usage
-If you don't have Elite/Club status, you can open up "config.json" and change "elite" from true to false in order to use Prime Battle Solution instead of Everful Nostrum.  
-You can change the used non-Elite/Club items by editing the item IDs for "ccb" and "nostrum" in "config.json".  
+There are several options you can change in the "config.json" file:  
+  
+* "elite" - If you don't have Elite/Club status, change this to "false" in order to use Prime Battle Solution instead of Everful Nostrum
+* "useNostrum" - Change this to "false" if you do not want the module to use any Nostrums
+* "useCCB" - Change this to "false" if you do not want the module to use any CCBs
+* "log" - If you need to find a specific item ID, change this to "true" and it will log the ID of any item you use in the proxy chat
+* "nostrum" - This is the ID of the Nostrum item the module will use. Only matters when "elite" is set to "false"
+* "ccb" - This is the ID of the Nostrum item the module will use
   
 While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
 This serves as the script's command interface.  
@@ -26,11 +32,20 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 The script makes sure that you are not dead, mounted, in a battleground or in a negotiation before using an item.
 
 ## Credits
-Contains code from true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
+Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 
 ## Changelog
 <details>
 
+### 2.0.0
+* [*] Fixed Nostrum items being used after every loading screen
+* [*] Fixed missing abnormalities for some Crystalbind and Nostrum items
+* [~] Changed Nostrum reapplication time from 10-25 minutes to less than 5 minutes
+* [~] Code revamp
+* [+] Added CCB reapplication time at less than 10 minutes instead of waiting until the buff runs out
+* [+] Added "useNostrum" option (see Usage)
+* [+] Added "useCCB" option (see Usage)
+* [+] Added "log" option (see Usage)
 ### 1.3.10
 * [*] Support for patch versions < 75
 ### 1.3.9

@@ -1,8 +1,11 @@
 {
-    "version": 1,
+    "version": 2,
     "data": {
         "elite": true,
-        "ccb": 70000,
-        "nostrum": 200999
+        "useNostrum": true,
+        "useCCB": true,
+        "log": false,
+        "nostrum": 200999,
+        "ccb": 70000
     }
 }
