@@ -1,10 +1,10 @@
-// Version 2.0.0
+// Version 2.0.1
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
 'use strict'
 
-const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, ?, TH
+const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, JP , TH
 	BUFF_NOSTRUM = [4020, 4021, 4022, 4023, 4030, 4031, 4032, 4044], // Nostrum abnormalities
 	BUFF_CCB = [4610, 4611, 4612, 4613, 4615, 4616, 4950, 5000003, 5020003], // Complete Crystalbind abnormalities
 	BUFF_INVINCIBILITY = [1134, 6007] // Invincibility abnormalities on resurrection
@@ -23,9 +23,15 @@ module.exports = function Essentials(mod) {
 	// ############# //
 
 	mod.game.on('enter_game', () => { start() })
-	mod.game.on('leave_game', () => { stop() })
+	mod.game.on('leave_game', () => {
+		stop()
+		abnormalities = {}
+	})
 
-	mod.game.me.on('resurrect', () => { start() })
+	mod.game.me.on('resurrect', () => {
+		abnormalities = {}
+		start()
+	})
 
 	mod.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
 		for(let item of event.inventory)
@@ -119,7 +125,6 @@ module.exports = function Essentials(mod) {
 			clearInterval(interval)
 			interval = null
 		}
-		abnormalities = {}
 	}
 
 	// ################ //

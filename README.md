@@ -1,5 +1,5 @@
 ##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Should work on all regions as long as the opcodes are mapped. Thanks to EME's recent unjustified DMCA actions against developers, opcodes for NA are no longer mapped.
+Should work on all regions as long as the opcodes are mapped. Thanks to EME's unjustified DMCA actions against developers, opcodes for NA are no longer mapped.
 
 ##### :heavy_exclamation_mark: Installation for Caali's tera-proxy :heavy_exclamation_mark:
 1) Download Essentials: https://github.com/TeraProxy/Essentials/archive/master.zip
@@ -38,6 +38,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.0.1
+* [*] Fixed CCB always being used on login
 ### 2.0.0
 * [*] Fixed Nostrum items being used after every loading screen
 * [*] Fixed missing abnormalities for some Crystalbind and Nostrum items
