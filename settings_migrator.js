@@ -1,7 +1,6 @@
 "use strict"
 
 const DefaultSettings = {
-	"elite": true,
 	"useNostrum": true,
 	"useCCB": true,
 	"log": false,
@@ -23,7 +22,7 @@ module.exports = function MigrateSettings(from_ver, to_ver, settings) {
             settings = MigrateSettings(from_ver, from_ver + 1, settings);
             return MigrateSettings(from_ver + 1, to_ver, settings);
         }
-        
+
         // If we reach this point it's guaranteed that from_ver === to_ver - 1, so we can implement
         // a switch for each version step that upgrades to the next version. This enables us to
         // upgrade from any version to the latest version without additional effort!
@@ -33,7 +32,7 @@ module.exports = function MigrateSettings(from_ver, to_ver, settings) {
 			default:
 				let oldsettings = settings
 				
-				settings = Object.assign(DefaultSettings, settings);
+				settings = Object.assign(DefaultSettings, {});
 				
 				for(let option in oldsettings) {
 					if(settings[option]) {
@@ -44,7 +43,7 @@ module.exports = function MigrateSettings(from_ver, to_ver, settings) {
 				console.log('[Essentials] Your settings have been updated to version ' + to_ver + '. You can edit the new config file after the next relog.')
 				break;
         }
-        
+
         return settings;
     }
 }

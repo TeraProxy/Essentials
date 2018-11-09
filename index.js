@@ -1,4 +1,4 @@
-// Version 2.0.1
+// Version 2.0.2
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
@@ -16,7 +16,8 @@ module.exports = function Essentials(mod) {
 	let slot = null,
 		interval = null,
 		enabled = true,
-		abnormalities = {}
+		abnormalities = {},
+		counter = 0
 
 	// ############# //
 	// ### Hooks ### //
@@ -81,7 +82,7 @@ module.exports = function Essentials(mod) {
 		for(let buff of BUFF_NOSTRUM) // Use Nostrum only when less than 5 minutes remaining
 			if(abnormalityDuration(buff) > 300000 || !mod.settings.useNostrum) return
 
-		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active || (mod.settings.elite && !slot)) return
+		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
 
 		if(enabled) {
 			if(slot) mod.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
@@ -99,6 +100,15 @@ module.exports = function Essentials(mod) {
 	}
 
 	function useItem(item) {
+		counter++
+		if(counter > 2) {
+			let missing = (item == mod.settings.nostrum) ? 'Nostrums' : 'Crystalbinds'
+			enabled = false
+			mod.command.message('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
+			console.log('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
+			setTimeout(() => { counter = 0 }, 4000)
+			return
+		}
 		mod.toServer('C_USE_ITEM', 3, {
 			gameId: mod.game.me.gameId,
 			id: item,
@@ -133,7 +143,7 @@ module.exports = function Essentials(mod) {
 
 	mod.command.add('essentials', () => {
 		enabled = !enabled
-		mod.command.message((enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-		console.log('[Essentials] ' + (enabled ? 'enabled' : 'disabled'))
+		mod.command.message('Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+		console.log('Essentials ' + (enabled ? 'enabled' : 'disabled'))
 	})
 }

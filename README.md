@@ -1,5 +1,5 @@
 ##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Should work on all regions as long as the opcodes are mapped. Thanks to EME's unjustified DMCA actions against developers, opcodes for NA are no longer mapped.
+Should work on all regions as long as the opcodes are mapped. Works on Caali's tera-proxy.  
 
 ##### :heavy_exclamation_mark: Installation for Caali's tera-proxy :heavy_exclamation_mark:
 1) Download Essentials: https://github.com/TeraProxy/Essentials/archive/master.zip
@@ -14,11 +14,10 @@ A tera-proxy module that automatically uses "Nostrum"/"Battle Solution" and "Com
 ## Usage
 There are several options you can change in the "config.json" file:  
   
-* "elite" - If you don't have Elite/Club status, change this to "false" in order to use Prime Battle Solution instead of Everful Nostrum
 * "useNostrum" - Change this to "false" if you do not want the module to use any Nostrums
 * "useCCB" - Change this to "false" if you do not want the module to use any CCBs
 * "log" - If you need to find a specific item ID, change this to "true" and it will log the ID of any item you use in the proxy chat
-* "nostrum" - This is the ID of the Nostrum item the module will use. Only matters when "elite" is set to "false"
+* "nostrum" - This is the ID of the Nostrum item the module will use.
 * "ccb" - This is the ID of the Nostrum item the module will use
   
 While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
@@ -38,8 +37,12 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.0.2
+* [~] Tracking of whether you are Elite/Tera-Club or not is now automated (no more configuration needed)
+* [+] Running out of an Essentials item will now send you a notification and disable the module
 ### 2.0.1
 * [*] Fixed CCB always being used on login
+* [+] Added a branch for Pinkie Pie's tera-proxy
 ### 2.0.0
 * [*] Fixed Nostrum items being used after every loading screen
 * [*] Fixed missing abnormalities for some Crystalbind and Nostrum items
