@@ -23,7 +23,7 @@ module.exports = function Essentials(mod) {
 	// ### Hooks ### //
 	// ############# //
 
-	mod.game.on('enter_game', () => { start() })
+	mod.game.on('enter_game', () => { setTimeout(start, 5000) })
 	mod.game.on('leave_game', () => {
 		stop()
 		abnormalities = {}
@@ -101,12 +101,12 @@ module.exports = function Essentials(mod) {
 
 	function useItem(item) {
 		counter++
-		if(counter > 2) {
+		if(counter > 3) {
 			let missing = (item == mod.settings.nostrum) ? 'Nostrums' : 'Crystalbinds'
 			enabled = false
 			mod.command.message('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
 			console.log('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
-			setTimeout(() => { counter = 0 }, 4000)
+			setTimeout(() => { counter = 0 }, 6000)
 			return
 		}
 		mod.toServer('C_USE_ITEM', 3, {
