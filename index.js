@@ -17,7 +17,8 @@ module.exports = function Essentials(mod) {
 		interval = null,
 		enabled = true,
 		abnormalities = {},
-		counter = 0
+		counter = 0,
+		resetcount = null
 
 	// ############# //
 	// ### Hooks ### //
@@ -101,14 +102,14 @@ module.exports = function Essentials(mod) {
 
 	function useItem(item) {
 		counter++
-		if(counter > 3) {
+		if(counter > 5) {
 			let missing = (item == mod.settings.nostrum) ? 'Nostrums' : 'Crystalbinds'
 			enabled = false
 			mod.command.message('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
 			console.log('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
-			setTimeout(() => { counter = 0 }, 6000)
 			return
 		}
+		if(!resetcount) resetcount = setTimeout(() => { counter = 0; resetcount = null }, 15000)
 		mod.toServer('C_USE_ITEM', 3, {
 			gameId: mod.game.me.gameId,
 			id: item,
@@ -127,7 +128,7 @@ module.exports = function Essentials(mod) {
 	
 	function start() {
 		stop()
-		interval = setInterval(checkItems, 1000)
+		interval = setInterval(checkItems, 1500)
 	}
 
 	function stop() {
