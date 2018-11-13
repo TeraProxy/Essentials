@@ -1,4 +1,4 @@
-// Version 2.0.2
+// Version 2.0.3
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
@@ -10,6 +10,17 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 8
 	BUFF_INVINCIBILITY = [1134, 6007] // Invincibility abnormalities on resurrection
 
 module.exports = function Essentials(mod) {
+
+	if(mod.proxyAuthor !== 'caali') {
+		const options = require('./module').options
+		if(options) {
+			const settingsVersion = options.settingsVersion
+			if(settingsVersion) {
+				mod.settings = require('./' + (options.settingsMigrator || 'module_settings_migrator.js'))(mod.settings._version, settingsVersion, mod.settings)
+				mod.settings._version = settingsVersion
+			}
+		}
+	}
 
 	mod.game.initialize("contract")
 
