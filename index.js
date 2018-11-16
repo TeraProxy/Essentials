@@ -1,4 +1,4 @@
-// Version 2.0.3
+// Version 2.0.4
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
@@ -55,7 +55,7 @@ module.exports = function Essentials(mod) {
 			}
 	})
 
-	mod.hook('S_ABNORMALITY_BEGIN', mod.base.majorPatchVersion >= 75 ? 3:2, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
+	mod.hook('S_ABNORMALITY_BEGIN', 3, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
 	mod.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
 	mod.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
 

@@ -40,7 +40,7 @@ module.exports = function MigrateSettings(from_ver, to_ver, settings) {
 					}
 				}
 
-				console.log('[Essentials] Your settings have been updated to version ' + to_ver + '. You can edit the new config file after the next relog.')
+				if(from_ver < to_ver) console.log('[Essentials] Your settings have been updated to version ' + to_ver + '. You can edit the new config file after the next relog.')
 				break;
         }
 

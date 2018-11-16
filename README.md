@@ -39,6 +39,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.0.4
+* [-] Removed support for patch versions < 75
 ### 2.0.3
 * [~] Cross compatibility for Caali's and Pinkie's proxy (no more branch)
 ### 2.0.2
