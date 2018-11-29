@@ -1,4 +1,4 @@
-// Version 2.0.4
+// Version 2.0.5
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
@@ -29,13 +29,14 @@ module.exports = function Essentials(mod) {
 		enabled = true,
 		abnormalities = {},
 		counter = 0,
-		resetcount = null
+		resetcount = null,
+		niceName = mod.proxyAuthor !== 'caali' ? '[Essentials] ' : ''
 
 	// ############# //
 	// ### Hooks ### //
 	// ############# //
 
-	mod.game.on('enter_game', () => { setTimeout(start, 5000) })
+	mod.game.on('enter_game', () => { setTimeout(start, 6000) })
 	mod.game.on('leave_game', () => {
 		stop()
 		abnormalities = {}
@@ -61,7 +62,7 @@ module.exports = function Essentials(mod) {
 
 	if(mod.settings.log) {
 		mod.hook('C_USE_ITEM', 3, event => {
-			mod.command.message('Used item ID: ' + event.id)
+			mod.command.message(niceName + 'Used item ID: ' + event.id)
 		})
 	}
 
@@ -116,8 +117,8 @@ module.exports = function Essentials(mod) {
 		if(counter > 5) {
 			let missing = (item == mod.settings.nostrum) ? 'Nostrums' : 'Crystalbinds'
 			enabled = false
-			mod.command.message('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
-			console.log('You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
+			mod.command.message(niceName + 'You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
+			console.log('[Essentials] You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
 			return
 		}
 		if(!resetcount) resetcount = setTimeout(() => { counter = 0; resetcount = null }, 15000)
@@ -155,7 +156,7 @@ module.exports = function Essentials(mod) {
 
 	mod.command.add('essentials', () => {
 		enabled = !enabled
-		mod.command.message('Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+		mod.command.message(niceName + 'Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 		console.log('Essentials ' + (enabled ? 'enabled' : 'disabled'))
 	})
 }
