@@ -14,10 +14,11 @@ If you enjoy my work and wish to support future development, feel free to drop m
 A tera-proxy module that automatically uses "Nostrum"/"Battle Solution" and "Complete Crystalbind" items whenever needed.
 
 ## Usage
-There are several options you can change in the "\tera-proxy\settings\Essentials.json" file:  
+There are several options you can change in the config.json file (Pinkie's proxy: "\settings\Essentials.json"):  
   
 * "useNostrum" - Change this to "false" if you do not want the module to use any Nostrums
 * "useCCB" - Change this to "false" if you do not want the module to use any CCBs
+* "dungeonOnly" - Change this to "true" if you want the items to be only used in dungeons
 * "log" - If you need to find a specific item ID, change this to "true" and it will log the ID of any item you use in the proxy chat
 * "nostrum" - This is the ID of the Nostrum item the module will use.
 * "ccb" - This is the ID of the Nostrum item the module will use
@@ -27,6 +28,7 @@ This serves as the script's command interface.
 The following commands are supported:  
   
 * essentials - enable/disable Essentials
+* essentials dungeon - switch between using items everywhere or only in dungeons
 
 ## Safety
 Whatever you send to the proxy chat in game is intercepted client-side. The chat is NOT sent to the server.  
@@ -39,6 +41,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.1.0
+* [+] Added "dungeonOnly" option and "dungeon" command
 ### 2.0.5
 * [~] Look and feel will now be the same on Caali's and Pinkie's proxy
 ### 2.0.4

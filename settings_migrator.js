@@ -3,6 +3,7 @@
 const DefaultSettings = {
 	"useNostrum": true,
 	"useCCB": true,
+	"dungeonOnly": false,
 	"log": false,
 	"nostrum": 200999,
 	"ccb": 70000

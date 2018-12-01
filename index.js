@@ -1,4 +1,4 @@
-// Version 2.0.5
+// Version 2.1.0
 // Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
 // Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 
@@ -96,6 +96,7 @@ module.exports = function Essentials(mod) {
 			if(abnormalityDuration(buff) > 300000 || !mod.settings.useNostrum) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
+		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
 
 		if(enabled) {
 			if(slot) mod.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
@@ -108,7 +109,8 @@ module.exports = function Essentials(mod) {
 			if(abnormalityDuration(buff) > 600000 || !mod.settings.useCCB) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
-
+		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
+		
 		if(enabled) useItem(mod.settings.ccb)
 	}
 
@@ -154,9 +156,19 @@ module.exports = function Essentials(mod) {
 	// ### Commands ### //
 	// ################ //
 
-	mod.command.add('essentials', () => {
-		enabled = !enabled
-		mod.command.message(niceName + 'Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-		console.log('Essentials ' + (enabled ? 'enabled' : 'disabled'))
+	mod.command.add('essentials', (param) => {
+		if(param == null) {
+			enabled = !enabled
+			mod.command.message(niceName + 'Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('Essentials ' + (enabled ? 'enabled' : 'disabled'))
+		}
+		else if(param == "dungeons" || param == "dungeons" || param == "dung") {
+			mod.settings.dungeonOnly = !mod.settings.dungeonOnly
+			mod.command.message(niceName + 'Items will be used ' + (enabled ? 'everywhere' : 'in dungeons only'))
+		}
+		else mod.command.message('Commands:\n'
+								+ ' "essentials" (enable/disable Essentials),\n'
+								+ ' "essentials dungeon" (switch between using items everywhere or only in dungeons)'
+		)
 	})
 }

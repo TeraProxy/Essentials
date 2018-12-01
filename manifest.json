@@ -1,10 +1,10 @@
 {
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "5536df20503ef5e3c25b9f8ecb5ff2602a02b38950f837354338c62b81c07e2f",
-		"index.js": "f795a649eebbe4a0c7bd1c6bfc8f68be6749b2e2b2255078e4785b0b60f1306d",
-		"module.json": "ff65da8b58525c2468a904b0c5cda7490b98d395dd352dcc12bf58ca67faf3cb",
-		"settings_migrator.js": "d06d1adc3c700cb22392e8921a6e3b99302ae536f46bc3da200311eee1e8141d"
+		"README.md": "0578f04bc98cab2fe7a7a4bf6714f8dbcf546825907d0b9df67e685ea0a1f2fc",
+		"index.js": "0ff66205d0c0a3a55456541ca2c244846c872733bb3906457f24eabf045f3330",
+		"module.json": "3b8cad84f702ec215160fa9c5aee35b8cd6bc30b56e65d8010f95c3cbe3652f6",
+		"settings_migrator.js": "b6cd4c0b82a975d56663951b7bb9a839201ab90fef123e41902871057831ee95"
 	},
 	"defs": {
 		"C_PCBANGINVENTORY_USE_SLOT": 1,
