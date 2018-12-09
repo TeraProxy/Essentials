@@ -32,7 +32,8 @@ The following commands are supported:
 
 ## Safety
 Whatever you send to the proxy chat in game is intercepted client-side. The chat is NOT sent to the server.  
-The script makes sure that you are not dead, mounted, in a battleground or in a negotiation before using an item.
+The script makes sure that you are not dead, mounted, in a battleground or in a negotiation before using an item.  
+The script will disable itself when you run out of items to use.
 
 ## Credits
 Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi  
@@ -41,6 +42,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.1.1
+* [*] Fixed wrong chat message for "dungeon" command
 ### 2.1.0
 * [+] Added "dungeonOnly" option and "dungeon" command
 ### 2.0.5

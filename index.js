@@ -1,7 +1,3 @@
-// Version 2.1.0
-// Based on true-everful-nostrum by Pinkie Pie https://github.com/pinkipi
-// Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
-
 'use strict'
 
 const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604], // EU, NA, RU, TW, ?, ?, JP , TH
@@ -164,11 +160,11 @@ module.exports = function Essentials(mod) {
 		}
 		else if(param == "dungeons" || param == "dungeons" || param == "dung") {
 			mod.settings.dungeonOnly = !mod.settings.dungeonOnly
-			mod.command.message(niceName + 'Items will be used ' + (enabled ? 'everywhere' : 'in dungeons only'))
+			mod.command.message(niceName + 'Items will be used ' + (mod.settings.dungeonOnly ? 'everywhere' : 'in dungeons only'))
 		}
 		else mod.command.message('Commands:\n'
-								+ ' "essentials" (enable/disable Essentials),\n'
-								+ ' "essentials dungeon" (switch between using items everywhere or only in dungeons)'
+			+ ' "essentials" (enable/disable Essentials),\n'
+			+ ' "essentials dungeon" (switch between using items everywhere or only in dungeons)'
 		)
 	})
 }
