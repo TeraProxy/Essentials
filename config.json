@@ -1,8 +1,10 @@
 {
-    "version": 4,
+    "version": 5,
     "data": {
         "useNostrum": true,
         "useCCB": true,
+        "nostrumTime": 2,
+        "CCBTime": 5,
         "dungeonOnly": false,
         "log": false,
         "nostrum": 200999,
