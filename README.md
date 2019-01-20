@@ -18,6 +18,8 @@ There are several options you can change in the config.json file (Pinkie's proxy
   
 * "useNostrum" - Change this to "false" if you do not want the module to use any Nostrums
 * "useCCB" - Change this to "false" if you do not want the module to use any CCBs
+* "nostrumTime" - When to use Nostrum (in minutes left)
+* "CCBTime" - When to use Complete Crystal Bind (in minutes left)
 * "dungeonOnly" - Change this to "true" if you want the items to be only used in dungeons
 * "log" - If you need to find a specific item ID, change this to "true" and it will log the ID of any item you use in the proxy chat
 * "nostrum" - This is the ID of the Nostrum item the module will use.
@@ -42,6 +44,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.2.0
+* [+] Added "nostrumTime" and "CCBTime" to config settings
 ### 2.1.1
 * [*] Fixed wrong chat message for "dungeon" command
 ### 2.1.0

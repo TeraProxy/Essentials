@@ -1,5 +1,5 @@
 {
-    "disableAutoUpdate": true,
+    "disableAutoUpdate": false,
     "name": "Essentials",
     "author": "Pinkie Pie / Caali / TeraProxy",
     "description": "A tera-proxy module that automatically uses Nostrum/Battle Solution and Complete Crystalbind items whenever needed.",
