@@ -7,17 +7,6 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 8
 
 module.exports = function Essentials(mod) {
 
-	if(mod.proxyAuthor !== 'caali') {
-		const options = require('./module').options
-		if(options) {
-			const settingsVersion = options.settingsVersion
-			if(settingsVersion) {
-				mod.settings = require('./' + (options.settingsMigrator || 'module_settings_migrator.js'))(mod.settings._version, settingsVersion, mod.settings)
-				mod.settings._version = settingsVersion
-			}
-		}
-	}
-
 	mod.game.initialize("contract")
 
 	let slot = null,
@@ -88,8 +77,8 @@ module.exports = function Essentials(mod) {
 	}
 
 	function useNostrum() {
-		for(let buff of BUFF_NOSTRUM) // Use Nostrum only when less than 5 minutes remaining
-			if(abnormalityDuration(buff) > 300000 || !mod.settings.useNostrum) return
+		for(let buff of BUFF_NOSTRUM) // Use Nostrum only when less than nostrumTime
+			if(abnormalityDuration(buff) > mod.settings.nostrumTime * 60000 || !mod.settings.useNostrum) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
 		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
@@ -101,8 +90,8 @@ module.exports = function Essentials(mod) {
 	}
 
 	function useCCB() {
-		for(let buff of BUFF_CCB) // Use CCB only when less than 10 minutes remaining
-			if(abnormalityDuration(buff) > 600000 || !mod.settings.useCCB) return
+		for(let buff of BUFF_CCB) // Use CCB only when less than CCBTime
+			if(abnormalityDuration(buff) > mod.settings.CCBTime * 60000 || !mod.settings.useCCB) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
 		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
@@ -115,8 +104,8 @@ module.exports = function Essentials(mod) {
 		if(counter > 5) {
 			let missing = (item == mod.settings.nostrum) ? 'Nostrums' : 'Crystalbinds'
 			enabled = false
-			mod.command.message(niceName + 'You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in this chat.')
-			console.log('[Essentials] You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "essentials" in proxy chat.')
+			mod.command.message(niceName + 'You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "ess" in this chat.')
+			console.log('[Essentials] You ran out of ' + missing + ' (ID: ' + item + '). Essentials has been disabled. Please restock and enable the module again by typing "ess" in proxy chat.')
 			return
 		}
 		if(!resetcount) resetcount = setTimeout(() => { counter = 0; resetcount = null }, 15000)
@@ -152,19 +141,19 @@ module.exports = function Essentials(mod) {
 	// ### Commands ### //
 	// ################ //
 
-	mod.command.add('essentials', (param) => {
-		if(param == null) {
+	mod.command.add(['essentials', 'ess'], (cmd) => {
+		if(cmd == null) {
 			enabled = !enabled
 			mod.command.message(niceName + 'Essentials ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 			console.log('Essentials ' + (enabled ? 'enabled' : 'disabled'))
 		}
-		else if(param == "dungeons" || param == "dungeons" || param == "dung") {
+		else if(cmd == "dungeon" || cmd == "dungeons" || cmd == "dung") {
 			mod.settings.dungeonOnly = !mod.settings.dungeonOnly
 			mod.command.message(niceName + 'Items will be used ' + (mod.settings.dungeonOnly ? 'everywhere' : 'in dungeons only'))
 		}
 		else mod.command.message('Commands:\n'
-			+ ' "essentials" (enable/disable Essentials),\n'
-			+ ' "essentials dungeon" (switch between using items everywhere or only in dungeons)'
+			+ ' "ess" (enable/disable Essentials),\n'
+			+ ' "ess dungeon" (switch between using items everywhere or only in dungeons)'
 		)
 	})
 }

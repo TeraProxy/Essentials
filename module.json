@@ -1,14 +1,14 @@
 {
-    "disableAutoUpdate": false,
+    "disableAutoUpdate": true,
     "name": "Essentials",
     "author": "Pinkie Pie / Caali / TeraProxy",
     "description": "A tera-proxy module that automatically uses Nostrum/Battle Solution and Complete Crystalbind items whenever needed.",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=A3KBZUCSEQ5RJ",
     "options": {
         "niceName": "Essentials",
         "guiName": "Essentials",
-        "settingsVersion": 4,
+        "settingsVersion": 5,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
     },
