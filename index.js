@@ -9,7 +9,7 @@ module.exports = function Essentials(mod) {
 
 	mod.game.initialize("contract")
 
-	let slot = null,
+	let item = null,
 		interval = null,
 		enabled = true,
 		abnormalities = {},
@@ -32,14 +32,32 @@ module.exports = function Essentials(mod) {
 		start()
 	})
 
-	mod.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
-		for(let item of event.inventory)
-			if(ITEMS_NOSTRUM.includes(item.item)) {
-				slot = item.slot
-				item.cooldown = 0 // Cooldowns from this packet don't seem to do anything except freeze your client briefly
-				return true
-			}
-	})
+	if(mod.majorPatchVersion >= 82) {
+		mod.hook('S_PREMIUM_SLOT_DATALIST', 2, event => {
+			for(let set of event.sets)
+				for(let entry of set.inventory)
+					if(ITEMS_NOSTRUM.includes(entry.id)) {
+						item = {
+							set: set.id,
+							slot: entry.slot,
+							type: entry.type,
+							id: entry.id
+						}
+						entry.cooldown = 0n // Cooldowns from this packet don't seem to do anything except freeze your client briefly
+						return true
+					}
+		})
+	}
+	else {
+		mod.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
+			for(let entry of event.inventory)
+				if(ITEMS_NOSTRUM.includes(entry.item)) {
+					item = { slot: entry.slot }
+					entry.cooldown = 0 // Cooldowns from this packet don't seem to do anything except freeze your client briefly
+					return true
+				}
+		})
+	}
 
 	mod.hook('S_ABNORMALITY_BEGIN', 3, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
 	mod.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
@@ -84,7 +102,10 @@ module.exports = function Essentials(mod) {
 		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
 
 		if(enabled) {
-			if(slot) mod.toServer('C_PCBANGINVENTORY_USE_SLOT', 1, {slot})
+			if(item) {
+				if(mod.majorPatchVersion >= 82) mod.send('C_USE_PREMIUM_SLOT', 1, item)
+				else mod.send('C_PCBANGINVENTORY_USE_SLOT', 1, item)
+			}
 			else useItem(mod.settings.nostrum)
 		}
 	}

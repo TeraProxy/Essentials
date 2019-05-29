@@ -1,21 +1,23 @@
 {
     "files": {
         "LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-        "README.md": "8ef6b68d460a74f1c44ae6599106f22b4c50a90e1eca5f45842c806042c0f652",
+        "README.md": "7b6e3b5c7edb14e5a100b7d0904bc2e3950e5170e9dc2c3a13ae2bdf7ec132c2",
         "config.json": {
             "overwrite": false,
             "hash": "f37583b51ed6c475cc38f812a13ae52b784f5f319be8560f94cbf0c7f7a80db2"
         },
-        "index.js": "48a1d269381dd8c3a7b693a0e436559bbd8298923e1e12d4869f28f2613c0a03",
-        "module.json": "07c83caebfb5cabe27f161d07253e4b37c48451c374309b6c21ef41b7d5c5a0a",
+        "index.js": "33b2eeb7a3152ebd54130e1566aed50fbae9c8ad1b50a8b9abf072cc96a884fd",
+        "module.json": "ff96042db6fa6829e2e64aca2593d4352693244a8433ada6268683521b9ca80d",
         "settings_migrator.js": "0da6c1e6f7d14d980db286eb577e2e181cfcba44d9bc7dc0601db6c0020a2a03"
     },
     "defs": {
         "C_PCBANGINVENTORY_USE_SLOT": 1,
         "C_USE_ITEM": 3,
+        "C_USE_PREMIUM_SLOT": 1,
         "S_ABNORMALITY_BEGIN": 3,
         "S_ABNORMALITY_END": 1,
         "S_ABNORMALITY_REFRESH": 1,
-        "S_PCBANGINVENTORY_DATALIST": 1
+        "S_PCBANGINVENTORY_DATALIST": 1,
+        "S_PREMIUM_SLOT_DATALIST": 2
     }
 }

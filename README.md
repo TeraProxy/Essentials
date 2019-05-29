@@ -44,6 +44,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.2.1
+* [*] Fixed for patch 82
 ### 2.2.0
 * [+] Added "nostrumTime" and "CCBTime" to config settings
 ### 2.1.1
