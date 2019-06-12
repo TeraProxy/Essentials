@@ -44,6 +44,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.2.2
+* [-] Removed compatibility for patches <82
 ### 2.2.1
 * [*] Fixed for patch 82
 ### 2.2.0
