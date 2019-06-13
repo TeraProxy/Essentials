@@ -6,16 +6,16 @@
             "overwrite": false,
             "hash": "f37583b51ed6c475cc38f812a13ae52b784f5f319be8560f94cbf0c7f7a80db2"
         },
-        "index.js": "669b4781ff3ed51cfbbe0237c4fd090c7055b7e8b9d58c36d2c666461f9acb3b",
+        "index.js": "eb820863a2c6e205b9f4a810b30042324c8a1917556798b99e5138421c18693f",
         "module.json": "2b2aafb2a5f30009b0f4d8eb35a7b3229b75979e9bac8b39386d2f7dbf739b96",
         "settings_migrator.js": "0da6c1e6f7d14d980db286eb577e2e181cfcba44d9bc7dc0601db6c0020a2a03"
     },
     "defs": {
-        "C_PCBANGINVENTORY_USE_SLOT": 1,
         "C_USE_ITEM": 3,
+        "C_USE_PREMIUM_SLOT": 1,
         "S_ABNORMALITY_BEGIN": 3,
         "S_ABNORMALITY_END": 1,
         "S_ABNORMALITY_REFRESH": 1,
-        "S_PCBANGINVENTORY_DATALIST": 1
+        "S_PREMIUM_SLOT_DATALIST": 2
     }
 }

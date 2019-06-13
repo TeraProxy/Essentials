@@ -32,13 +32,19 @@ module.exports = function Essentials(mod) {
 		start()
 	})
 
-	mod.hook('S_PCBANGINVENTORY_DATALIST', 1, event => {
-		for(let entry of event.inventory)
-			if(ITEMS_NOSTRUM.includes(entry.item)) {
-				item = { slot: entry.slot }
-				entry.cooldown = 0 // Cooldowns from this packet don't seem to do anything except freeze your client briefly
-				return true
-			}
+	mod.hook('S_PREMIUM_SLOT_DATALIST', 2, event => {
+		for(let set of event.sets)
+			for(let entry of set.inventory)
+				if(ITEMS_NOSTRUM.includes(entry.id)) {
+					item = {
+						set: set.id,
+						slot: entry.slot,
+						type: entry.type,
+						id: entry.id
+					}
+					entry.cooldown = 0n // Cooldowns from this packet don't seem to do anything except freeze your client briefly
+					return true
+				}
 	})
 
 	mod.hook('S_ABNORMALITY_BEGIN', 3, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
@@ -50,6 +56,8 @@ module.exports = function Essentials(mod) {
 			mod.command.message(niceName + 'Used item ID: ' + event.id)
 		})
 	}
+	
+	index.js
 
 	// ################# //
 	// ### Functions ### //
@@ -84,7 +92,7 @@ module.exports = function Essentials(mod) {
 		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
 
 		if(enabled) {
-			if(item) mod.send('C_PCBANGINVENTORY_USE_SLOT', 1, item)
+			if(item) mod.send('C_USE_PREMIUM_SLOT', 1, item)
 			else useItem(mod.settings.nostrum)
 		}
 	}
