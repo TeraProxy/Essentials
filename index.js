@@ -56,8 +56,6 @@ module.exports = function Essentials(mod) {
 			mod.command.message(niceName + 'Used item ID: ' + event.id)
 		})
 	}
-	
-	index.js
 
 	// ################# //
 	// ### Functions ### //
