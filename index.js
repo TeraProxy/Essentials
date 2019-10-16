@@ -47,8 +47,8 @@ module.exports = function Essentials(mod) {
 				}
 	})
 
-	mod.hook('S_ABNORMALITY_BEGIN', 3, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
-	mod.hook('S_ABNORMALITY_REFRESH', 1, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
+	mod.hook('S_ABNORMALITY_BEGIN', 4, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
+	mod.hook('S_ABNORMALITY_REFRESH', 2, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
 	mod.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
 
 	if(mod.settings.log) {

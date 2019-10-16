@@ -1,21 +1,21 @@
 {
     "files": {
         "LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-        "README.md": "7d26fcaa1601db184cf7f981e4547f2adf8f666cb4f2e44f52318047eb9cbd73",
+        "README.md": "fa2f1ae95a38952d29c7d46310c02abbd059c824293e5c21399cd35ae5d9aee6",
         "config.json": {
             "overwrite": false,
             "hash": "f37583b51ed6c475cc38f812a13ae52b784f5f319be8560f94cbf0c7f7a80db2"
         },
-        "index.js": "7c108725a63eebd49a9a8c24e125efc734a948f7c64841c4c48ecaf7e8d0c845",
-        "module.json": "2b2aafb2a5f30009b0f4d8eb35a7b3229b75979e9bac8b39386d2f7dbf739b96",
+        "index.js": "f0b34c037801167d07455fac6143117b477e7e40968cb39e866b2f2880193763",
+        "module.json": "3ce569a061c182fe78e3355019aa577ad389083cc1b3b980889c865ade9fa7ba",
         "settings_migrator.js": "0da6c1e6f7d14d980db286eb577e2e181cfcba44d9bc7dc0601db6c0020a2a03"
     },
     "defs": {
         "C_USE_ITEM": 3,
         "C_USE_PREMIUM_SLOT": 1,
-        "S_ABNORMALITY_BEGIN": 3,
+        "S_ABNORMALITY_BEGIN": 4,
         "S_ABNORMALITY_END": 1,
-        "S_ABNORMALITY_REFRESH": 1,
+        "S_ABNORMALITY_REFRESH": 2,
         "S_PREMIUM_SLOT_DATALIST": 2
     }
 }
