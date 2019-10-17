@@ -7,12 +7,11 @@ const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 8
 
 module.exports = function Essentials(mod) {
 
-	mod.game.initialize("contract")
+	mod.game.initialize(['me', 'me.abnormalities', 'contract']);
 
 	let item = null,
 		interval = null,
 		enabled = true,
-		abnormalities = {},
 		counter = 0,
 		resetcount = null,
 		niceName = mod.proxyAuthor !== 'caali' ? '[Essentials] ' : ''
@@ -22,15 +21,9 @@ module.exports = function Essentials(mod) {
 	// ############# //
 
 	mod.game.on('enter_game', () => { setTimeout(start, 6000) })
-	mod.game.on('leave_game', () => {
-		stop()
-		abnormalities = {}
-	})
+	mod.game.on('leave_game', () => { stop() })
 
-	mod.game.me.on('resurrect', () => {
-		abnormalities = {}
-		start()
-	})
+	mod.game.me.on('resurrect', () => { start() })
 
 	mod.hook('S_PREMIUM_SLOT_DATALIST', 2, event => {
 		for(let set of event.sets)
@@ -47,10 +40,6 @@ module.exports = function Essentials(mod) {
 				}
 	})
 
-	mod.hook('S_ABNORMALITY_BEGIN', 4, abnormality.bind(null, 'S_ABNORMALITY_BEGIN'))
-	mod.hook('S_ABNORMALITY_REFRESH', 2, abnormality.bind(null, 'S_ABNORMALITY_REFRESH'))
-	mod.hook('S_ABNORMALITY_END', 1, abnormality.bind(null, 'S_ABNORMALITY_END'))
-
 	if(mod.settings.log) {
 		mod.hook('C_USE_ITEM', 3, event => {
 			mod.command.message(niceName + 'Used item ID: ' + event.id)
@@ -61,18 +50,10 @@ module.exports = function Essentials(mod) {
 	// ### Functions ### //
 	// ################# //
 
-	function abnormality(type, event) {
-		if(mod.game.me.is(event.target)) {
-			if(type === 'S_ABNORMALITY_END')
-				delete abnormalities[event.id]
-			else abnormalities[event.id] = Date.now() + event.duration
-		}
-	}
-
 	function abnormalityDuration(id) {
-		if(!abnormalities[id]) return 0
-		return abnormalities[id] - Date.now()
-	}
+        const abnormality = mod.game.me.abnormalities[id]
+        return abnormality ? abnormality.remaining : 0
+    }
 
 	function checkItems() {
 		for(let buff of BUFF_INVINCIBILITY) // Do not overwrite invincibility buff
