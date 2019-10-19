@@ -44,6 +44,8 @@ Based on true-everful-nostrum by Caali https://github.com/caali-hackerman
 ## Changelog
 <details>
 
+### 2.3.1
+* [~] Dungeon status now handled by tera-game-state
 ### 2.3.0
 * [~] Abnormality tracking now handled by tera-game-state
 ### 2.2.3

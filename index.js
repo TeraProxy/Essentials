@@ -50,7 +50,7 @@ module.exports = function Essentials(mod) {
 	// ### Functions ### //
 	// ################# //
 
-	function abnormalityDuration(id) {
+    function abnormalityDuration(id) {
         const abnormality = mod.game.me.abnormalities[id]
         return abnormality ? abnormality.remaining : 0
     }
@@ -68,7 +68,7 @@ module.exports = function Essentials(mod) {
 			if(abnormalityDuration(buff) > mod.settings.nostrumTime * 60000 || !mod.settings.useNostrum) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
-		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
+		if(!mod.game.me.inDungeon && mod.settings.dungeonOnly) return
 
 		if(enabled) {
 			if(item) mod.send('C_USE_PREMIUM_SLOT', 1, item)
@@ -81,7 +81,7 @@ module.exports = function Essentials(mod) {
 			if(abnormalityDuration(buff) > mod.settings.CCBTime * 60000 || !mod.settings.useCCB) return
 
 		if(!mod.game.isIngame || mod.game.isInLoadingScreen || !mod.game.me.alive || mod.game.me.mounted || mod.game.me.inBattleground || mod.game.contract.active) return
-		if(mod.game.me.zone < 9000 && mod.settings.dungeonOnly) return
+		if(!mod.game.me.inDungeon && mod.settings.dungeonOnly) return
 		
 		if(enabled) useItem(mod.settings.ccb)
 	}

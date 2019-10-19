@@ -1,13 +1,13 @@
 {
     "files": {
         "LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-        "README.md": "e8e36965c466fd3923732b9f3217b527e7ed2367d7d7b85052e8340403b6d114",
+        "README.md": "bd77af365824f17b12821ff888640a4c34d8a2781516df76a4bb0635da3f9250",
         "config.json": {
             "overwrite": false,
             "hash": "f37583b51ed6c475cc38f812a13ae52b784f5f319be8560f94cbf0c7f7a80db2"
         },
-        "index.js": "57388c6d3dafacc123440b7f451970dca031c57c7fbb022711a885827fd05a01",
-        "module.json": "08d58bb70bfe24c1f306afb57129720b0418215dec143be036e643ed8184340c",
+        "index.js": "97f0351532e8ce264ba26a0f1532d2f7426cedadb776b07fb2d2a51db85bc955",
+        "module.json": "6c1da3208bfd117b94de7acb78a0fd728ef33605c89e5dc4215f4b8d8ea2e641",
         "settings_migrator.js": "0da6c1e6f7d14d980db286eb577e2e181cfcba44d9bc7dc0601db6c0020a2a03"
     },
     "defs": {
